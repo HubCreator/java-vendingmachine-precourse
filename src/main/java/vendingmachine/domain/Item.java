@@ -48,6 +48,14 @@ public class Item {
         return price;
     }
 
+    public boolean haveStock() {
+        return this.count > 0;
+    }
+
+    public int getIfLowerThan(int price) {
+        return Math.min(price, this.price);
+    }
+
     private enum PriceConditions {
         MIN(100), UNIT(10);
 

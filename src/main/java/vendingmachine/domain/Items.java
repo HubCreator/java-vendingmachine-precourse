@@ -22,4 +22,23 @@ public class Items {
         int itemIndex = items.indexOf(item);
         return items.get(itemIndex).purchase();
     }
+
+    public boolean canPurchase(String itemName) {
+        int itemIndex = items.indexOf(new Item(itemName));
+        Item item = items.get(itemIndex);
+        return item.haveStock();
+    }
+
+    public boolean isLowerThanCheapestOne(int amount) {
+        int minPrice = getMinPrice();
+        return minPrice > amount;
+    }
+
+    private int getMinPrice() {
+        int minPrice = Integer.MAX_VALUE;
+        for (Item item : items) {
+            minPrice = item.getIfLowerThan(minPrice);
+        }
+        return minPrice;
+    }
 }

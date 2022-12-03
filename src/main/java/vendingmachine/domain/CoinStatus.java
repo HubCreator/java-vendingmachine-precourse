@@ -57,12 +57,27 @@ public class CoinStatus implements Iterable<Coin> {
         return amountTotal == value;
     }
 
-    public int getAmountTotal() {
-        return amountTotal;
-    }
-
     @Override
     public Iterator<Coin> iterator() {
         return coinMap.keySet().iterator();
+    }
+
+    public String getBalance(int purchaseAmount) {
+        StringBuilder result = new StringBuilder();
+        for (Map.Entry<Coin, Integer> e : coinMap.entrySet()) {
+            if (purchaseAmount == 0) break;
+            int count = 0;
+            while (e.getKey().getAmount() <= purchaseAmount && e.getValue() > 0) {
+                count++;
+                coinMap.put(e.getKey(), e.getValue() - 1);
+            }
+            if (count > 0) {
+                result.append(MessageFormat.format(messageFormat,
+                        e.getKey().getAmount(),
+                        count));
+            }
+        }
+
+        return result.toString();
     }
 }

@@ -17,20 +17,21 @@ public class Controller {
     public void run() {
         int purchaseAmount = InputView.readPurchaseAmount();
         vendingMachine.initializePurchaseAmount(purchaseAmount);
-        
-        while (vendingMachine.haveEnoughMoney(purchaseAmount)) {
-            String itemName = InputView.readItemName(vendingMachine);
-            vendingMachine.purchase(itemName);
-        }
+
+        String itemName;
+        do {
+            itemName = InputView.readItemName(vendingMachine);
+        } while (vendingMachine.canPurchase(itemName));
+        OutputView.printResult(vendingMachine);
 
     }
 
     private void initVendingMachine() {
         int changeTotal = InputView.readVendingMachineChange();
         CoinStatus coinStatus = CoinStatus.create(changeTotal);
-        OutputView.print(coinStatus);
+        OutputView.printCoinStatus(coinStatus);
 
         Items items = InputView.readItems();
-        vendingMachine = VendingMachine.create(items, changeTotal);
+        vendingMachine = VendingMachine.create(items, coinStatus);
     }
 }

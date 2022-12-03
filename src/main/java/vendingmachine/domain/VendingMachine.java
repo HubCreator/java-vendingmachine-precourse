@@ -2,28 +2,36 @@ package vendingmachine.domain;
 
 public class VendingMachine {
     private final Items items;
-    private int changeTotal;
+    private final CoinStatus coinStatus;
     private int purchaseAmount;
 
-    private VendingMachine(Items items, int changeTotal) {
+    private VendingMachine(Items items, CoinStatus coinStatus) {
         this.items = items;
-        this.changeTotal = changeTotal;
+        this.coinStatus = coinStatus;
     }
 
-    public static VendingMachine create(Items items, int changeTotal) {
-        return new VendingMachine(items, changeTotal);
+    private VendingMachine(Items items) {
+        this(items, null);
     }
 
-    public void purchase(String itemName) {
-        purchaseAmount -= items.purchase(new Item(itemName));
+    public static VendingMachine create(Items items) {
+        return new VendingMachine(items);
+    }
+
+    public static VendingMachine create(Items items, CoinStatus coinStatus) {
+        return new VendingMachine(items, coinStatus);
+    }
+
+    public boolean canPurchase(String itemName) {
+        if (purchaseAmount != 0 && items.canPurchase(itemName) && !items.isLowerThanCheapestOne(purchaseAmount)) {
+            purchaseAmount -= items.purchase(new Item(itemName));
+            return true;
+        }
+        return false;
     }
 
     public void initializePurchaseAmount(int purchaseAmount) {
         this.purchaseAmount = purchaseAmount;
-    }
-
-    public boolean haveEnoughMoney(int purchaseAmount) {
-        return purchaseAmount > changeTotal;
     }
 
     public int getPurchaseAmount() {
@@ -32,5 +40,10 @@ public class VendingMachine {
 
     public boolean hasItem(String input) {
         return items.has(new Item(input));
+    }
+
+    public String getBalance() {
+        coinStatus.getBalance(purchaseAmount);
+        return null;
     }
 }
