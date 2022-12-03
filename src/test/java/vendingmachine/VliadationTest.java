@@ -23,9 +23,7 @@ class VliadationTest {
 
     @Test
     void 자판기가_보유하고_있는_금액으로부터_coin을_추출한다() {
-        int sum = 0;
-        CoinStatus coinStatus = ValidationUtil.getCoin(450);
-        System.out.println(coinStatus.printStatus());
-        ;
+        CoinStatus coinStatus = CoinStatus.create(450);
+        System.out.println(coinStatus.getStatus());
     }
 }

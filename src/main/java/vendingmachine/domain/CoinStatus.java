@@ -1,8 +1,10 @@
 package vendingmachine.domain;
 
+import camp.nextstep.edu.missionutils.Randoms;
 import vendingmachine.enums.Coin;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.Iterator;
 import java.util.List;
@@ -21,13 +23,27 @@ public class CoinStatus implements Iterable<Coin> {
         }
     }
 
-    public CoinStatus(List<Coin> coins) {
+    private CoinStatus(List<Coin> coins) {
         for (Coin coin : coins) {
             coinMap.put(coin, coinMap.get(coin) + 1);
         }
     }
 
-    public String printStatus() {
+    public static CoinStatus create(int amount) {
+        List<Coin> result = new ArrayList<>();
+        do {
+            int randomIndex = Randoms.pickNumberInRange(0, Coin.values().length - 1);
+            Coin coin = Coin.getRandomCoin(randomIndex);
+            if (amount >= coin.getAmount()) {
+                result.add(coin);
+                amount -= coin.getAmount();
+            }
+        } while (amount > 0);
+
+        return new CoinStatus(result);
+    }
+
+    public String getStatus() {
         StringBuilder result = new StringBuilder(message);
         for (Map.Entry<Coin, Integer> e : coinMap.entrySet()) {
             result.append(MessageFormat.format(messageFormat, e.getKey().getAmount(), e.getValue()));

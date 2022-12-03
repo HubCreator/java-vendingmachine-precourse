@@ -1,9 +1,6 @@
 package vendingmachine.validation;
 
-import camp.nextstep.edu.missionutils.Randoms;
-import vendingmachine.domain.CoinStatus;
 import vendingmachine.domain.Item;
-import vendingmachine.enums.Coin;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,19 +16,5 @@ public class ValidationUtil {
             result.add(new Item(information[0], Integer.parseInt(information[1]), Integer.parseInt(information[2])));
         }
         return result;
-    }
-
-    public static CoinStatus getCoin(int amount) {
-        List<Coin> result = new ArrayList<>();
-        do {
-            int randomIndex = Randoms.pickNumberInRange(0, Coin.values().length - 1);
-            Coin coin = Coin.getRandomCoin(randomIndex);
-            if (amount >= coin.getAmount()) {
-                result.add(coin);
-                amount -= coin.getAmount();
-            }
-        } while (amount > 0);
-
-        return new CoinStatus(result);
     }
 }
