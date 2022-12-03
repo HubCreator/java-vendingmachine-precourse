@@ -21,7 +21,9 @@ public class Controller {
             Item item = InputView.readItemName(vendingMachine);
             if (vendingMachine.canPurchase(item)) {
                 vendingMachine.purchase(item);
+                continue;
             }
+            break;
         }
         OutputView.printResult(vendingMachine);
     }
