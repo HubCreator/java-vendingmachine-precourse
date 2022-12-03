@@ -1,10 +1,10 @@
 package vendingmachine.view;
 
 import camp.nextstep.edu.missionutils.Console;
+import vendingmachine.domain.Item;
 import vendingmachine.domain.Items;
 import vendingmachine.domain.VendingMachine;
 import vendingmachine.utils.InputValidation;
-import vendingmachine.utils.Util;
 
 public class InputView {
 
@@ -20,15 +20,14 @@ public class InputView {
      * @return int
      */
     public static int readVendingMachineChange() {
-        printMessage(INPUT_VENDING_MACHINE_AMOUNT);
-        String input = Console.readLine();
-        try {
-            return InputValidation.validateInputChange(input);
-        } catch (IllegalArgumentException exception) {
-            printMessage(exception);
-            readVendingMachineChange();
+        while (true) {
+            try {
+                printMessage(INPUT_VENDING_MACHINE_AMOUNT);
+                return InputValidation.validateInputChange(Console.readLine());
+            } catch (IllegalArgumentException exception) {
+                printMessage(exception);
+            }
         }
-        return -1;
     }
 
     /**
@@ -37,16 +36,14 @@ public class InputView {
      * @return Items
      */
     public static Items readItems() {
-        printMessage(INPUT_ITEM_PRICE_COUNT);
-        String input = Console.readLine();
-        try {
-            InputValidation.validateItem(input);
-            return new Items(Util.getItems(input));
-        } catch (IllegalArgumentException exception) {
-            printMessage(exception);
-            readItems();
+        while (true) {
+            try {
+                printMessage(INPUT_ITEM_PRICE_COUNT);
+                return InputValidation.validateItem(Console.readLine());
+            } catch (IllegalArgumentException exception) {
+                printMessage(exception);
+            }
         }
-        return null;
     }
 
     /**
@@ -55,9 +52,14 @@ public class InputView {
      * @return int
      */
     public static int readPurchaseAmount() {
-        printMessage(INPUT_PURCHASE_AMOUNT);
-        String input = Console.readLine();
-        return InputValidation.validateDigit(input);
+        while (true) {
+            try {
+                printMessage(INPUT_PURCHASE_AMOUNT);
+                return InputValidation.validateDigit(Console.readLine());
+            } catch (IllegalArgumentException exception) {
+                printMessage(exception);
+            }
+        }
     }
 
     /**
@@ -66,14 +68,17 @@ public class InputView {
      * @param vendingMachine
      * @return String
      */
-    public static String readItemName(VendingMachine vendingMachine) {
-        printMessage(String.format(PURCHASE_AMOUNT, vendingMachine.getPurchaseAmount()));
-        printMessage(INPUT_PURCHASE_ITEM_NAME);
-        String input = Console.readLine();
-        if (!vendingMachine.hasItem(input)) {
-            readItemName(vendingMachine);
+    public static Item readItemName(VendingMachine vendingMachine) {
+        while (true) {
+            try {
+                printMessage(String.format(PURCHASE_AMOUNT, vendingMachine.getPurchaseAmount()));
+                printMessage(INPUT_PURCHASE_ITEM_NAME);
+                String input = Console.readLine();
+                return vendingMachine.getItem(input);
+            } catch (IllegalArgumentException exception) {
+                printMessage(exception);
+            }
         }
-        return input;
     }
 
     private static void printMessage(String message) {

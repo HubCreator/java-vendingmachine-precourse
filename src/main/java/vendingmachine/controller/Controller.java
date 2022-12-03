@@ -16,18 +16,14 @@ public class Controller {
     }
 
     public void run() {
-        vendingMachine.initializePurchaseAmount(InputView.readPurchaseAmount());
-        mainLogic();
-        OutputView.printResult(vendingMachine);
-    }
-
-    private void mainLogic() {
+        vendingMachine.setPurchaseAmount(InputView.readPurchaseAmount());
         while (vendingMachine.haveBalance()) {
-            String itemName = InputView.readItemName(vendingMachine);
-            if (vendingMachine.canPurchase(itemName)) {
-                vendingMachine.purchase(itemName);
+            Item item = InputView.readItemName(vendingMachine);
+            if (vendingMachine.canPurchase(item)) {
+                vendingMachine.purchase(item);
             }
         }
+        OutputView.printResult(vendingMachine);
     }
 
     private VendingMachine initVendingMachine() {

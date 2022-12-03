@@ -13,26 +13,23 @@ public class Items {
         this.minPrice = getMinPrice();
     }
 
-    public boolean has(Item item) {
-        if (!items.contains(item)) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_ITEM_NAME.getMessage());
-        }
-        return true;
-    }
-
     public int purchase(Item item) {
         int itemIndex = items.indexOf(item);
         return items.get(itemIndex).purchase();
     }
 
-    public boolean canPurchase(String itemName) {
-        int itemIndex = items.indexOf(new Item(itemName));
-        Item item = items.get(itemIndex);
-        return item.haveStock();
+    public boolean canPurchase(Item item) {
+        if (!items.contains(item)) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_ITEM_NAME.getMessage());
+        }
+        int index = items.indexOf(item);
+        return items.get(index).haveStock();
     }
 
     public boolean isGreaterThanCheapestItem(int amount) {
-        if (amount == 0) return false;
+        if (amount == 0) {
+            return false;
+        }
         return minPrice <= amount;
     }
 

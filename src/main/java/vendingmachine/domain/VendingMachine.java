@@ -1,5 +1,7 @@
 package vendingmachine.domain;
 
+import vendingmachine.enums.ErrorMessage;
+
 public class VendingMachine {
     private final Items items;
     private final CoinStatus coinStatus;
@@ -22,15 +24,15 @@ public class VendingMachine {
         return new VendingMachine(items, coinStatus);
     }
 
-    public boolean canPurchase(String itemName) {
-        return items.canPurchase(itemName);
+    public boolean canPurchase(Item item) {
+        return items.canPurchase(item);
     }
 
     public boolean haveBalance() {
         return items.isGreaterThanCheapestItem(purchaseAmount);
     }
 
-    public void initializePurchaseAmount(int purchaseAmount) {
+    public void setPurchaseAmount(int purchaseAmount) {
         this.purchaseAmount = purchaseAmount;
     }
 
@@ -38,15 +40,18 @@ public class VendingMachine {
         return purchaseAmount;
     }
 
-    public boolean hasItem(String input) {
-        return items.has(new Item(input));
+    public Item getItem(String input) {
+        if (!items.canPurchase(new Item(input))) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_ITEM_NAME.getMessage());
+        }
+        return new Item(input);
     }
 
     public String getBalance() {
         return coinStatus.getBalance(purchaseAmount);
     }
 
-    public void purchase(String itemName) {
-        purchaseAmount -= items.purchase(new Item(itemName));
+    public void purchase(Item item) {
+        purchaseAmount -= items.purchase(item);
     }
 }

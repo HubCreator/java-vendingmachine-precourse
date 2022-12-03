@@ -22,18 +22,18 @@ class VendingMachineTest {
                         new Item("콜라", 1500, 3),
                         new Item("사이다", 1000, 20)));
         vendingMachine = VendingMachine.create(items);
-        vendingMachine.initializePurchaseAmount(3000);
+        vendingMachine.setPurchaseAmount(3000);
     }
 
 
     @Test
     void 상품을_구매할_때마다_잔액을_확인한다() {
-        assertThat(vendingMachine.canPurchase("콜라")).isTrue();
-        vendingMachine.purchase("콜라");
+        assertThat(vendingMachine.canPurchase(new Item("콜라"))).isTrue();
+        vendingMachine.purchase(new Item("콜라"));
         assertThat(vendingMachine.getPurchaseAmount()).isEqualTo(1500);
 
-        assertThat(vendingMachine.canPurchase("사이다")).isTrue();
-        vendingMachine.purchase("사이다");
+        assertThat(vendingMachine.canPurchase(new Item("사이다"))).isTrue();
+        vendingMachine.purchase(new Item("사이다"));
         assertThat(vendingMachine.getPurchaseAmount()).isEqualTo(500);
     }
 }

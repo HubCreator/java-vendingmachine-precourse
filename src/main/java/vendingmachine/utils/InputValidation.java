@@ -1,6 +1,11 @@
 package vendingmachine.utils;
 
+import vendingmachine.domain.Item;
+import vendingmachine.domain.Items;
 import vendingmachine.enums.ErrorMessage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class InputValidation {
 
@@ -19,12 +24,22 @@ public class InputValidation {
         }
     }
 
-    public static void validateItem(String input) {
+    public static Items validateItem(String input) {
+        List<Item> result = new ArrayList<>();
+
         String[] split = input.split(";");
         for (String item : split) {
-            if (item.charAt(0) != '[' || item.charAt(item.length() - 1) != ']') {
-                throw new IllegalArgumentException(ErrorMessage.INVALID_RANGE_PRICE.getMessage());
-            }
+            validateItemFormat(item);
+            item = item.substring(1, item.length() - 1);
+            String[] information = item.split(",");
+            result.add(new Item(information[0], Integer.parseInt(information[1]), Integer.parseInt(information[2])));
+        }
+        return new Items(result);
+    }
+
+    private static void validateItemFormat(String item) {
+        if (item.charAt(0) != '[' || item.charAt(item.length() - 1) != ']') {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_RANGE_PRICE.getMessage());
         }
     }
 
