@@ -6,9 +6,11 @@ import java.util.List;
 
 public class Items {
     private final List<Item> items;
+    private final int minPrice;
 
     public Items(List<Item> items) {
         this.items = items;
+        this.minPrice = getMinPrice();
     }
 
     public boolean has(Item item) {
@@ -29,15 +31,14 @@ public class Items {
         return item.haveStock();
     }
 
-    public boolean isLowerThanCheapestOne(int amount) {
-        int minPrice = getMinPrice();
-        return minPrice > amount;
+    public boolean isGreaterThanCheapestItem(int amount) {
+        return minPrice < amount;
     }
 
     private int getMinPrice() {
         int minPrice = Integer.MAX_VALUE;
         for (Item item : items) {
-            minPrice = item.getIfLowerThan(minPrice);
+            minPrice = item.getLowerOne(minPrice);
         }
         return minPrice;
     }

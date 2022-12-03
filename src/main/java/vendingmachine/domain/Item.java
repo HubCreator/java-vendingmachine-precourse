@@ -52,7 +52,7 @@ public class Item {
         return this.count > 0;
     }
 
-    public int getIfLowerThan(int price) {
+    public int getLowerOne(int price) {
         return Math.min(price, this.price);
     }
 

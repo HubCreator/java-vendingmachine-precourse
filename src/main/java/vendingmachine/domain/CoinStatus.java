@@ -69,6 +69,7 @@ public class CoinStatus implements Iterable<Coin> {
             int count = 0;
             while (e.getKey().getAmount() <= purchaseAmount && e.getValue() > 0) {
                 count++;
+                purchaseAmount -= e.getKey().getAmount();
                 coinMap.put(e.getKey(), e.getValue() - 1);
             }
             if (count > 0) {

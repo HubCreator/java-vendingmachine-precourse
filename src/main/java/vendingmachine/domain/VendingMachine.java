@@ -23,7 +23,7 @@ public class VendingMachine {
     }
 
     public boolean canPurchase(String itemName) {
-        if (purchaseAmount != 0 && items.canPurchase(itemName) && !items.isLowerThanCheapestOne(purchaseAmount)) {
+        if (items.canPurchase(itemName) && items.isGreaterThanCheapestItem(purchaseAmount)) {
             purchaseAmount -= items.purchase(new Item(itemName));
             return true;
         }
@@ -43,7 +43,6 @@ public class VendingMachine {
     }
 
     public String getBalance() {
-        coinStatus.getBalance(purchaseAmount);
-        return null;
+        return coinStatus.getBalance(purchaseAmount);
     }
 }
