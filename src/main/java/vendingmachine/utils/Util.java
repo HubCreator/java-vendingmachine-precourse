@@ -1,11 +1,11 @@
-package vendingmachine.validation;
+package vendingmachine.utils;
 
 import vendingmachine.domain.Item;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ValidationUtil {
+public class Util {
     public static List<Item> getItems(String input) {
         List<Item> result = new ArrayList<>();
 

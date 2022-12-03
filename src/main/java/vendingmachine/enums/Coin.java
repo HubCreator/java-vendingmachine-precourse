@@ -26,13 +26,5 @@ public enum Coin {
         return amount;
     }
 
-    public static String printCurrentCoinTotal() {
-        StringBuilder result = new StringBuilder();
-        Coin[] values = values();
-        for (Coin value : values) {
-        }
-
-        return result.toString();
-    }
 }
 
