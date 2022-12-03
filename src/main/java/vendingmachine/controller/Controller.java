@@ -7,23 +7,30 @@ import vendingmachine.view.InputView;
 import vendingmachine.view.OutputView;
 
 public class Controller {
+
     private final VendingMachine vendingMachine;
 
     public Controller() {
-        this.vendingMachine = new VendingMachine();
+        int changeTotal = initVendingMachine();
+        Items items = InputView.readItems();
+        this.vendingMachine = VendingMachine.create(items, changeTotal);
     }
 
     public void run() {
-        initVendingMachine();
-        Items items = InputView.readItems();
-        int amount = InputView.readPurchaseAmount();
-        
+        int purchaseAmount = InputView.readPurchaseAmount();
+        vendingMachine.initializePurchaseAmount(purchaseAmount);
+        while (vendingMachine.haveEnoughMoney(purchaseAmount)) {
+            String itemName = InputView.readItemName(vendingMachine);
+            vendingMachine.purchase(itemName);
+        }
+
     }
 
-    private void initVendingMachine() {
-        CoinStatus coinStatus = InputView.readVendingMachinePrice();
+    private int initVendingMachine() {
+        CoinStatus coinStatus = InputView.readVendingMachineChange();
         if (coinStatus != null) {
             OutputView.print(coinStatus.getStatus());
         }
+        return coinStatus.getAmountTotal();
     }
 }

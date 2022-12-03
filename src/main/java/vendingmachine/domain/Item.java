@@ -6,8 +6,12 @@ import java.util.Objects;
 
 public class Item {
     private final String itemName;
-    private final int price;
-    private final int count;
+    private int price;
+    private int count;
+
+    public Item(String itemName) {
+        this.itemName = itemName;
+    }
 
     public Item(String itemName, int price, int count) {
         validatePrice(price);
@@ -37,6 +41,11 @@ public class Item {
     @Override
     public int hashCode() {
         return Objects.hash(itemName);
+    }
+
+    public int purchase() {
+        count--;
+        return price;
     }
 
     private enum PriceConditions {

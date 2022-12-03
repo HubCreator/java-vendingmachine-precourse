@@ -3,16 +3,22 @@ package vendingmachine.view;
 import camp.nextstep.edu.missionutils.Console;
 import vendingmachine.domain.CoinStatus;
 import vendingmachine.domain.Items;
+import vendingmachine.domain.VendingMachine;
 import vendingmachine.enums.ErrorMessage;
 import vendingmachine.validation.ValidationUtil;
+
+import java.text.MessageFormat;
 
 public class InputView {
 
     private static final String INPUT_VENDING_MACHINE_AMOUNT = "자판기가 보유하고 있는 금액을 입력해 주세요.";
     public static final String INPUT_ITEM_PRICE_COUNT = "상품명과 가격, 수량을 입력해 주세요.";
     public static final String INPUT_PURCHASE_AMOUNT = "투입 금액을 입력해 주세요.";
+    public static final String PURCHASE_AMOUNT = "투입 금액: {0}원";
+    public static final String INPUT_PURCHASE_ITEM_NAME = "구매할 상품명을 입력해 주세요.";
 
-    public static CoinStatus readVendingMachinePrice() {
+
+    public static CoinStatus readVendingMachineChange() {
         System.out.println(INPUT_VENDING_MACHINE_AMOUNT);
         String input = Console.readLine();
         try {
@@ -21,7 +27,7 @@ public class InputView {
             return CoinStatus.create(value);
         } catch (IllegalArgumentException exception) {
             System.out.println(exception.getMessage());
-            readVendingMachinePrice();
+            readVendingMachineChange();
         }
         return null;
     }
@@ -60,5 +66,15 @@ public class InputView {
         System.out.println(INPUT_PURCHASE_AMOUNT);
         String input = Console.readLine();
         return validateDigit(input);
+    }
+
+    public static String readItemName(VendingMachine vendingMachine) {
+        System.out.println(MessageFormat.format(PURCHASE_AMOUNT, vendingMachine.getPurchaseAmount()));
+        System.out.println(INPUT_PURCHASE_ITEM_NAME);
+        String input = Console.readLine();
+        if (!vendingMachine.hasItem(input)) {
+            readItemName(vendingMachine);
+        }
+        return input;
     }
 }

@@ -53,12 +53,16 @@ public class CoinStatus implements Iterable<Coin> {
         return result.toString();
     }
 
+    public boolean isSameAmountTotal(int value) {
+        return amountTotal == value;
+    }
+
+    public int getAmountTotal() {
+        return amountTotal;
+    }
+
     @Override
     public Iterator<Coin> iterator() {
         return coinMap.keySet().iterator();
-    }
-
-    public boolean isSameAmountTotal(int value) {
-        return amountTotal == value;
     }
 }
