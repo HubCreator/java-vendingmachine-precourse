@@ -29,7 +29,7 @@ public class CoinStatus implements Iterable<Coin> {
     public String printStatus() {
         StringBuilder result = new StringBuilder();
         for (Map.Entry<Coin, Integer> e : coinMap.entrySet()) {
-            result.append(MessageFormat.format(messageFormat, e.getKey(), e.getValue()));
+            result.append(MessageFormat.format(messageFormat, e.getKey().getAmount(), e.getValue()));
         }
         return result.toString();
     }
