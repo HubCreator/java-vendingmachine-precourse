@@ -3,11 +3,8 @@ package vendingmachine.view;
 import camp.nextstep.edu.missionutils.Console;
 import vendingmachine.domain.Items;
 import vendingmachine.domain.VendingMachine;
-import vendingmachine.enums.ErrorMessage;
 import vendingmachine.utils.InputValidation;
 import vendingmachine.utils.Util;
-
-import java.text.MessageFormat;
 
 public class InputView {
 
@@ -17,44 +14,73 @@ public class InputView {
     public static final String PURCHASE_AMOUNT = "투입 금액: %d원";
     public static final String INPUT_PURCHASE_ITEM_NAME = "구매할 상품명을 입력해 주세요.";
 
+    /**
+     * 잔돈 입력
+     *
+     * @return int
+     */
     public static int readVendingMachineChange() {
-        System.out.println(INPUT_VENDING_MACHINE_AMOUNT);
+        printMessage(INPUT_VENDING_MACHINE_AMOUNT);
         String input = Console.readLine();
         try {
-            return InputValidation.validate(input);
+            return InputValidation.validateInputChange(input);
         } catch (IllegalArgumentException exception) {
-            System.out.println(exception.getMessage());
+            printMessage(exception);
             readVendingMachineChange();
         }
         return -1;
     }
 
+    /**
+     * 상품 입력
+     *
+     * @return Items
+     */
     public static Items readItems() {
-        System.out.println(INPUT_ITEM_PRICE_COUNT);
+        printMessage(INPUT_ITEM_PRICE_COUNT);
         String input = Console.readLine();
         try {
+            InputValidation.validateItem(input);
             return new Items(Util.getItems(input));
         } catch (IllegalArgumentException exception) {
-            System.out.println(ErrorMessage.INVALID_RANGE_PRICE.getMessage());
+            printMessage(exception);
             readItems();
         }
         return null;
     }
 
+    /**
+     * 투입 금액 입력
+     *
+     * @return int
+     */
     public static int readPurchaseAmount() {
-        System.out.println(INPUT_PURCHASE_AMOUNT);
+        printMessage(INPUT_PURCHASE_AMOUNT);
         String input = Console.readLine();
         return InputValidation.validateDigit(input);
     }
 
+    /**
+     * 상품 입력
+     *
+     * @param vendingMachine
+     * @return String
+     */
     public static String readItemName(VendingMachine vendingMachine) {
-        System.out.println(String.format(PURCHASE_AMOUNT, vendingMachine.getPurchaseAmount()));
-        System.out.println(MessageFormat.format(PURCHASE_AMOUNT, vendingMachine.getPurchaseAmount()));
-        System.out.println(INPUT_PURCHASE_ITEM_NAME);
+        printMessage(String.format(PURCHASE_AMOUNT, vendingMachine.getPurchaseAmount()));
+        printMessage(INPUT_PURCHASE_ITEM_NAME);
         String input = Console.readLine();
         if (!vendingMachine.hasItem(input)) {
             readItemName(vendingMachine);
         }
         return input;
+    }
+
+    private static void printMessage(String message) {
+        System.out.println(message);
+    }
+
+    private static void printMessage(IllegalArgumentException exception) {
+        System.out.println(exception.getMessage());
     }
 }
