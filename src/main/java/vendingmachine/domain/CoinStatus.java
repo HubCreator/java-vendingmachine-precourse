@@ -15,6 +15,7 @@ public class CoinStatus implements Iterable<Coin> {
     private static final String message = "자판기가 보유한 동전\n";
     private static final String messageFormat = "{0}원 - {1}개\n";
     private static final Map<Coin, Integer> coinMap = new EnumMap<>(Coin.class);
+    private static int amountTotal = 0;
 
     static {
         Coin[] values = Coin.values();
@@ -35,6 +36,7 @@ public class CoinStatus implements Iterable<Coin> {
             int randomIndex = Randoms.pickNumberInRange(0, Coin.values().length - 1);
             Coin coin = Coin.getRandomCoin(randomIndex);
             if (amount >= coin.getAmount()) {
+                amountTotal += coin.getAmount();
                 result.add(coin);
                 amount -= coin.getAmount();
             }
@@ -54,5 +56,9 @@ public class CoinStatus implements Iterable<Coin> {
     @Override
     public Iterator<Coin> iterator() {
         return coinMap.keySet().iterator();
+    }
+
+    public boolean isSameAmountTotal(int value) {
+        return amountTotal == value;
     }
 }

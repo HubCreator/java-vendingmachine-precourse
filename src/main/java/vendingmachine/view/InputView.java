@@ -40,7 +40,7 @@ public class InputView {
             }
             return value;
         } catch (NumberFormatException exception) {
-            throw new IllegalArgumentException(exception);
+            throw new IllegalArgumentException(ErrorMessage.INVALID_FORMAT.getMessage(), exception);
         }
     }
 

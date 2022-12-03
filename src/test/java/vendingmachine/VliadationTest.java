@@ -3,7 +3,6 @@ package vendingmachine;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
-import vendingmachine.domain.CoinStatus;
 import vendingmachine.domain.Item;
 import vendingmachine.validation.ValidationUtil;
 
@@ -21,9 +20,4 @@ class VliadationTest {
                         new Item("사이다", 1000, 10));
     }
 
-    @Test
-    void 자판기가_보유하고_있는_금액으로부터_coin을_추출한다() {
-        CoinStatus coinStatus = CoinStatus.create(450);
-        System.out.println(coinStatus.getStatus());
-    }
 }
