@@ -15,15 +15,16 @@ public class Controller {
     }
 
     public void run() {
-        int purchaseAmount = InputView.readPurchaseAmount();
-        vendingMachine.initializePurchaseAmount(purchaseAmount);
+        vendingMachine.initializePurchaseAmount(InputView.readPurchaseAmount());
+        mainLogic();
+        OutputView.printResult(vendingMachine);
+    }
 
+    private void mainLogic() {
         String itemName;
         do {
             itemName = InputView.readItemName(vendingMachine);
         } while (vendingMachine.canPurchase(itemName));
-        OutputView.printResult(vendingMachine);
-
     }
 
     private VendingMachine initVendingMachine() {
