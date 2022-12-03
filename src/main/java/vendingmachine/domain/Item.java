@@ -31,12 +31,12 @@ public class Item {
             return false;
         }
         Item item = (Item) o;
-        return price == item.price && count == item.count && Objects.equals(itemName, item.itemName);
+        return Objects.equals(itemName, item.itemName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(itemName, price, count);
+        return Objects.hash(itemName);
     }
 
     private enum PriceConditions {
