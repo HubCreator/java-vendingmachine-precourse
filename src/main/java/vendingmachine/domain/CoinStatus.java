@@ -10,6 +10,7 @@ import java.util.Map;
 
 public class CoinStatus implements Iterable<Coin> {
 
+    private static final String message = "자판기가 보유한 동전\n";
     private static final String messageFormat = "{0}원 - {1}개\n";
     private static final Map<Coin, Integer> coinMap = new EnumMap<>(Coin.class);
 
@@ -27,7 +28,7 @@ public class CoinStatus implements Iterable<Coin> {
     }
 
     public String printStatus() {
-        StringBuilder result = new StringBuilder();
+        StringBuilder result = new StringBuilder(message);
         for (Map.Entry<Coin, Integer> e : coinMap.entrySet()) {
             result.append(MessageFormat.format(messageFormat, e.getKey().getAmount(), e.getValue()));
         }
