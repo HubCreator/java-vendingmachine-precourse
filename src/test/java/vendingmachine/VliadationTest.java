@@ -3,11 +3,9 @@ package vendingmachine;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
-import vendingmachine.domain.Coin;
+import vendingmachine.domain.CoinStatus;
 import vendingmachine.domain.Item;
 import vendingmachine.validation.ValidationUtil;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -26,10 +24,8 @@ class VliadationTest {
     @Test
     void 자판기가_보유하고_있는_금액으로부터_coin을_추출한다() {
         int sum = 0;
-        List<Coin> coins = ValidationUtil.getCoin(450);
-        for (Coin coin : coins) {
-            sum += coin.getAmount();
-        }
-        assertThat(sum).isEqualTo(450);
+        CoinStatus coinStatus = ValidationUtil.getCoin(450);
+        System.out.println(coinStatus.printStatus());
+        ;
     }
 }
