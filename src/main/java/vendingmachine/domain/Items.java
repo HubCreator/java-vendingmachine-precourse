@@ -32,6 +32,7 @@ public class Items {
     }
 
     public boolean isGreaterThanCheapestItem(int amount) {
+        if (amount == 0) return false;
         return minPrice <= amount;
     }
 

@@ -14,7 +14,7 @@ public class InputView {
     private static final String INPUT_VENDING_MACHINE_AMOUNT = "자판기가 보유하고 있는 금액을 입력해 주세요.";
     public static final String INPUT_ITEM_PRICE_COUNT = "상품명과 가격, 수량을 입력해 주세요.";
     public static final String INPUT_PURCHASE_AMOUNT = "투입 금액을 입력해 주세요.";
-    public static final String PURCHASE_AMOUNT = "투입 금액: {0}원";
+    public static final String PURCHASE_AMOUNT = "투입 금액: %d원";
     public static final String INPUT_PURCHASE_ITEM_NAME = "구매할 상품명을 입력해 주세요.";
 
     public static int readVendingMachineChange() {
@@ -48,6 +48,7 @@ public class InputView {
     }
 
     public static String readItemName(VendingMachine vendingMachine) {
+        System.out.println(String.format(PURCHASE_AMOUNT, vendingMachine.getPurchaseAmount()));
         System.out.println(MessageFormat.format(PURCHASE_AMOUNT, vendingMachine.getPurchaseAmount()));
         System.out.println(INPUT_PURCHASE_ITEM_NAME);
         String input = Console.readLine();

@@ -23,11 +23,11 @@ public class VendingMachine {
     }
 
     public boolean canPurchase(String itemName) {
-        if (items.isGreaterThanCheapestItem(purchaseAmount) && items.canPurchase(itemName)) {
-            purchaseAmount -= items.purchase(new Item(itemName));
-            return true;
-        }
-        return false;
+        return items.canPurchase(itemName);
+    }
+
+    public boolean haveBalance() {
+        return items.isGreaterThanCheapestItem(purchaseAmount);
     }
 
     public void initializePurchaseAmount(int purchaseAmount) {
@@ -44,5 +44,9 @@ public class VendingMachine {
 
     public String getBalance() {
         return coinStatus.getBalance(purchaseAmount);
+    }
+
+    public void purchase(String itemName) {
+        purchaseAmount -= items.purchase(new Item(itemName));
     }
 }

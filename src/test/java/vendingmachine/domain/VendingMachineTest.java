@@ -19,8 +19,8 @@ class VendingMachineTest {
     void init() {
         items = new Items(
                 Arrays.asList(
-                        new Item("콜라", 1000, 3),
-                        new Item("사이다", 500, 2)));
+                        new Item("콜라", 1500, 3),
+                        new Item("사이다", 1000, 20)));
         vendingMachine = VendingMachine.create(items);
         vendingMachine.initializePurchaseAmount(3000);
     }
@@ -28,13 +28,12 @@ class VendingMachineTest {
 
     @Test
     void 상품을_구매할_때마다_잔액을_확인한다() {
-        vendingMachine.canPurchase("콜라");
-        assertThat(vendingMachine.getPurchaseAmount()).isEqualTo(2000);
-        vendingMachine.canPurchase("콜라");
-        assertThat(vendingMachine.getPurchaseAmount()).isEqualTo(1000);
-        vendingMachine.canPurchase("사이다");
+        assertThat(vendingMachine.canPurchase("콜라")).isTrue();
+        vendingMachine.purchase("콜라");
+        assertThat(vendingMachine.getPurchaseAmount()).isEqualTo(1500);
+
+        assertThat(vendingMachine.canPurchase("사이다")).isTrue();
+        vendingMachine.purchase("사이다");
         assertThat(vendingMachine.getPurchaseAmount()).isEqualTo(500);
-        vendingMachine.canPurchase("사이다");
-        assertThat(vendingMachine.getPurchaseAmount()).isEqualTo(0);
     }
 }

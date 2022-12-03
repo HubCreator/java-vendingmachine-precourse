@@ -1,6 +1,7 @@
 package vendingmachine.controller;
 
 import vendingmachine.domain.CoinStatus;
+import vendingmachine.domain.Item;
 import vendingmachine.domain.Items;
 import vendingmachine.domain.VendingMachine;
 import vendingmachine.view.InputView;
@@ -21,10 +22,12 @@ public class Controller {
     }
 
     private void mainLogic() {
-        String itemName;
-        do {
-            itemName = InputView.readItemName(vendingMachine);
-        } while (vendingMachine.canPurchase(itemName));
+        while (vendingMachine.haveBalance()) {
+            String itemName = InputView.readItemName(vendingMachine);
+            if (vendingMachine.canPurchase(itemName)) {
+                vendingMachine.purchase(itemName);
+            }
+        }
     }
 
     private VendingMachine initVendingMachine() {
