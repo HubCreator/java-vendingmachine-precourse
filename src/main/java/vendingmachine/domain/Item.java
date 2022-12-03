@@ -9,15 +9,15 @@ public class Item {
     private int price;
     private int count;
 
-    public Item(String itemName) {
-        this.itemName = itemName;
-    }
-
     public Item(String itemName, int price, int count) {
+        this(itemName);
         validatePrice(price);
-        this.itemName = itemName;
         this.price = price;
         this.count = count;
+    }
+
+    public Item(String itemName) {
+        this.itemName = itemName;
     }
 
     private void validatePrice(int price) {
