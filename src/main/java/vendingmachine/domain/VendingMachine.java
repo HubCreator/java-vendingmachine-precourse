@@ -23,7 +23,7 @@ public class VendingMachine {
     }
 
     public boolean canPurchase(String itemName) {
-        if (items.canPurchase(itemName) && items.isGreaterThanCheapestItem(purchaseAmount)) {
+        if (items.isGreaterThanCheapestItem(purchaseAmount) && items.canPurchase(itemName)) {
             purchaseAmount -= items.purchase(new Item(itemName));
             return true;
         }

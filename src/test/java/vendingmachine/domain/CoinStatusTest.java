@@ -1,6 +1,10 @@
 package vendingmachine.domain;
 
+import camp.nextstep.edu.missionutils.Randoms;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -13,4 +17,10 @@ class CoinStatusTest {
         assertThat(coinStatus.isSameAmountTotal(450)).isTrue();
     }
 
+    @RepeatedTest(50)
+    void name() {
+        int result = Randoms.pickNumberInList(Arrays.asList(0, 1, 2, 3));
+        assertThat(result).isGreaterThanOrEqualTo(0);
+        assertThat(result).isLessThanOrEqualTo(3);
+    }
 }

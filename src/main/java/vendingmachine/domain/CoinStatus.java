@@ -5,26 +5,28 @@ import vendingmachine.enums.Coin;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class CoinStatus implements Iterable<Coin> {
 
     private static final String message = "자판기가 보유한 동전\n";
     private static final String messageFormat = "{0}원 - {1}개\n";
-    private static final Map<Coin, Integer> coinMap = new EnumMap<>(Coin.class);
+
+    private final Map<Coin, Integer> coinMap;
     private static int amountTotal = 0;
 
-    static {
+    private CoinStatus(List<Coin> coins) {
+        coinMap = new EnumMap<>(Coin.class);
         Coin[] values = Coin.values();
         for (Coin value : values) {
             coinMap.put(value, 0);
         }
-    }
 
-    private CoinStatus(List<Coin> coins) {
         for (Coin coin : coins) {
             coinMap.put(coin, coinMap.get(coin) + 1);
         }
@@ -33,16 +35,21 @@ public class CoinStatus implements Iterable<Coin> {
     public static CoinStatus create(int amount) {
         List<Coin> result = new ArrayList<>();
         do {
-            int randomIndex = Randoms.pickNumberInRange(0, Coin.values().length - 1);
-            Coin coin = Coin.getRandomCoin(randomIndex);
-            if (amount >= coin.getAmount()) {
-                amountTotal += coin.getAmount();
+            int randomIndex = Randoms.pickNumberInList(getEntry());
+            Coin coin = Coin.getCoin(randomIndex);
+            int currentCoinAmount = coin.getAmount();
+            if (amount >= currentCoinAmount) {
+                amountTotal += currentCoinAmount;
                 result.add(coin);
-                amount -= coin.getAmount();
+                amount -= currentCoinAmount;
             }
         } while (amount > 0);
 
         return new CoinStatus(result);
+    }
+
+    private static List<Integer> getEntry() {
+        return Arrays.asList(500, 100, 50, 10);
     }
 
     public String getStatus() {
@@ -73,9 +80,7 @@ public class CoinStatus implements Iterable<Coin> {
                 coinMap.put(e.getKey(), e.getValue() - 1);
             }
             if (count > 0) {
-                result.append(MessageFormat.format(messageFormat,
-                        e.getKey().getAmount(),
-                        count));
+                result.append(MessageFormat.format(messageFormat, e.getKey().getAmount(), count));
             }
         }
 
