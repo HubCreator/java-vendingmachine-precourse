@@ -8,10 +8,10 @@ import vendingmachine.view.OutputView;
 
 public class Controller {
 
-    private VendingMachine vendingMachine;
+    private final VendingMachine vendingMachine;
 
     public Controller() {
-        initVendingMachine();
+        this.vendingMachine = initVendingMachine();
     }
 
     public void run() {
@@ -26,12 +26,12 @@ public class Controller {
 
     }
 
-    private void initVendingMachine() {
+    private VendingMachine initVendingMachine() {
         int changeTotal = InputView.readVendingMachineChange();
         CoinStatus coinStatus = CoinStatus.create(changeTotal);
         OutputView.printCoinStatus(coinStatus);
 
         Items items = InputView.readItems();
-        vendingMachine = VendingMachine.create(items, coinStatus);
+        return VendingMachine.create(items, coinStatus);
     }
 }

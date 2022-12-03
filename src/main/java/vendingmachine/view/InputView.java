@@ -17,7 +17,6 @@ public class InputView {
     public static final String PURCHASE_AMOUNT = "투입 금액: {0}원";
     public static final String INPUT_PURCHASE_ITEM_NAME = "구매할 상품명을 입력해 주세요.";
 
-
     public static int readVendingMachineChange() {
         System.out.println(INPUT_VENDING_MACHINE_AMOUNT);
         String input = Console.readLine();
@@ -29,7 +28,6 @@ public class InputView {
         }
         return -1;
     }
-
 
     public static Items readItems() {
         System.out.println(INPUT_ITEM_PRICE_COUNT);
