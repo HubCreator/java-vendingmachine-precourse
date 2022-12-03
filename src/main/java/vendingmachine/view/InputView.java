@@ -18,18 +18,18 @@ public class InputView {
     public static final String INPUT_PURCHASE_ITEM_NAME = "구매할 상품명을 입력해 주세요.";
 
 
-    public static CoinStatus readVendingMachineChange() {
+    public static int readVendingMachineChange() {
         System.out.println(INPUT_VENDING_MACHINE_AMOUNT);
         String input = Console.readLine();
         try {
             int value = validateDigit(input);
             validateRange(value);
-            return CoinStatus.create(value);
+            return value;
         } catch (IllegalArgumentException exception) {
             System.out.println(exception.getMessage());
             readVendingMachineChange();
         }
-        return null;
+        return -1;
     }
 
     private static void validateRange(int value) {

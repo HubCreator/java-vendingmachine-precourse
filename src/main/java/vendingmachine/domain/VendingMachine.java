@@ -26,10 +26,6 @@ public class VendingMachine {
         return purchaseAmount > changeTotal;
     }
 
-    public int getChangeTotal() {
-        return changeTotal;
-    }
-
     public int getPurchaseAmount() {
         return purchaseAmount;
     }
