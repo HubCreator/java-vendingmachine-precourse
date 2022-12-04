@@ -5,12 +5,12 @@ import vendingmachine.enums.ErrorMessage;
 public class VendingMachine {
     private final Items items;
     private final CoinStatus coinStatus;
-    private int purchaseAmount;
+    private final Price purchase;
 
-    private VendingMachine(Items items, CoinStatus coinStatus, int purchaseAmount) {
+    private VendingMachine(Items items, CoinStatus coinStatus, int purchase) {
         this.items = items;
         this.coinStatus = coinStatus;
-        this.purchaseAmount = purchaseAmount;
+        this.purchase = new Price(purchase);
     }
 
     private VendingMachine(Items items) {
@@ -22,9 +22,8 @@ public class VendingMachine {
     }
 
     /**
-     *
-     * @param coinStatus : 잔돈
-     * @param items : 구매 가능한 상품들
+     * @param coinStatus     : 잔돈
+     * @param items          : 구매 가능한 상품들
      * @param purchaseAmount : 투입 금액
      * @return VendingMachine
      */
@@ -37,15 +36,11 @@ public class VendingMachine {
     }
 
     public boolean haveBalance() {
-        return items.isGreaterThanCheapestItem(purchaseAmount);
+        return items.isGreaterThanCheapestItem(purchase);
     }
 
-    public void setPurchaseAmount(int purchaseAmount) {
-        this.purchaseAmount = purchaseAmount;
-    }
-
-    public int getPurchaseAmount() {
-        return purchaseAmount;
+    public int getPurchase() {
+        return purchase.get();
     }
 
     public Item getItem(String input) {
@@ -56,10 +51,10 @@ public class VendingMachine {
     }
 
     public String getBalance() {
-        return coinStatus.getBalance(purchaseAmount);
+        return coinStatus.getBalance(purchase);
     }
 
     public void purchase(Item item) {
-        purchaseAmount -= items.purchase(item);
+        purchase.decrease(items.purchase(item));
     }
 }

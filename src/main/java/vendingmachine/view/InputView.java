@@ -71,7 +71,7 @@ public class InputView {
     public static Item readItemName(VendingMachine vendingMachine) {
         while (true) {
             try {
-                printMessage(String.format(PURCHASE_AMOUNT, vendingMachine.getPurchaseAmount()));
+                printMessage(String.format(PURCHASE_AMOUNT, vendingMachine.getPurchase()));
                 printMessage(INPUT_PURCHASE_ITEM_NAME);
                 String input = Console.readLine();
                 return vendingMachine.getItem(input);

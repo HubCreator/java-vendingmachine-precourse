@@ -14,7 +14,7 @@ public class OutputView {
 
     public static void printResult(VendingMachine vendingMachine) {
         System.out.println(MessageFormat.format(message,
-                vendingMachine.getPurchaseAmount(),
+                vendingMachine.getPurchase(),
                 vendingMachine.getBalance()));
     }
 }

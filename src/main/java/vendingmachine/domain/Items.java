@@ -26,11 +26,11 @@ public class Items {
         return items.get(index).haveStock();
     }
 
-    public boolean isGreaterThanCheapestItem(int amount) {
-        if (amount == 0) {
+    public boolean isGreaterThanCheapestItem(Price amount) {
+        if (amount.isZero()) {
             return false;
         }
-        return minPrice <= amount;
+        return amount.isGreaterOrEqualThan(minPrice);
     }
 
     private int getMinPrice() {

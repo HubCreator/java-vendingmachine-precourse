@@ -68,14 +68,14 @@ public class CoinStatus implements Iterable<Coin> {
         return coinMap.keySet().iterator();
     }
 
-    public String getBalance(int purchaseAmount) {
+    public String getBalance(Price purchase) {
         StringBuilder result = new StringBuilder();
         for (Map.Entry<Coin, Integer> e : coinMap.entrySet()) {
-            if (purchaseAmount == 0) break;
+            if (purchase.isZero()) break;
             int count = 0;
-            while (e.getKey().getAmount() <= purchaseAmount && e.getValue() > 0) {
+            while (purchase.isGreaterOrEqualThan(e.getKey().getAmount()) && e.getValue() > 0) {
                 count++;
-                purchaseAmount -= e.getKey().getAmount();
+                purchase.decrease(e.getKey().getAmount());
                 coinMap.put(e.getKey(), e.getValue() - 1);
             }
             if (count > 0) {
