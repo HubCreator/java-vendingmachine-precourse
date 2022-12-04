@@ -17,7 +17,6 @@ public class CoinStatus implements Iterable<Coin> {
     private static final List<Integer> entry;
 
     private final Map<Coin, Integer> coinMap;
-    private final Price change; // 잔돈
 
     static {
         entry = new ArrayList<>();
@@ -26,12 +25,11 @@ public class CoinStatus implements Iterable<Coin> {
         }
     }
 
-    private CoinStatus(List<Coin> coins, int change) {
+    private CoinStatus(List<Coin> coins) {
         coinMap = initMap();
         for (Coin coin : coins) {
             coinMap.put(coin, coinMap.get(coin) + 1);
         }
-        this.change = new Price(change);
     }
 
     private Map<Coin, Integer> initMap() {
@@ -53,7 +51,7 @@ public class CoinStatus implements Iterable<Coin> {
             }
         } while (amount > 0);
 
-        return new CoinStatus(result, amount);
+        return new CoinStatus(result);
     }
 
     public String getStatus() {
@@ -73,21 +71,28 @@ public class CoinStatus implements Iterable<Coin> {
         return coinMap.keySet().iterator();
     }
 
-    public String getBalanceInfo(Price purchase) {
+    public String getChangeInfo(Price purchase) {
+        if (purchase.isZero()) {
+            return null;
+        }
+
         StringBuilder result = new StringBuilder();
         for (Map.Entry<Coin, Integer> e : coinMap.entrySet()) {
-            if (purchase.isZero()) break;
-            int count = 0;
-            while (purchase.isGreaterOrEqualThan(e.getKey().getAmount()) && e.getValue() > 0) {
-                count++;
-                purchase.decrease(e.getKey().getAmount());
-                coinMap.put(e.getKey(), e.getValue() - 1);
-            }
-            if (count > 0) {
-                result.append(MessageFormat.format(messageFormat, e.getKey().getAmount(), count));
+            if (countValidCoin(purchase, e) > 0) {
+                result.append(MessageFormat.format(messageFormat, e.getKey().getAmount(), countValidCoin(purchase, e)));
             }
         }
 
         return result.toString();
+    }
+
+    private int countValidCoin(Price purchase, Map.Entry<Coin, Integer> e) {
+        int count = 0;
+        while (purchase.isGreaterOrEqualThan(e.getKey().getAmount()) && e.getValue() > 0) {
+            count++;
+            purchase.decrease(e.getKey().getAmount());
+            coinMap.put(e.getKey(), e.getValue() - 1);
+        }
+        return count;
     }
 }
