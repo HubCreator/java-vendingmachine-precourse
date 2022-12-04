@@ -23,7 +23,7 @@ public class InputView {
         while (true) {
             try {
                 printMessage(INPUT_VENDING_MACHINE_AMOUNT);
-                return InputValidation.validateInputChange(Console.readLine());
+                return InputValidation.validateAmount(Console.readLine());
             } catch (IllegalArgumentException exception) {
                 printMessage(exception);
             }
@@ -55,7 +55,7 @@ public class InputView {
         while (true) {
             try {
                 printMessage(INPUT_PURCHASE_AMOUNT);
-                return InputValidation.validateDigit(Console.readLine());
+                return InputValidation.validateAmount(Console.readLine());
             } catch (IllegalArgumentException exception) {
                 printMessage(exception);
             }
