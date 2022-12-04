@@ -17,10 +17,6 @@ public class VendingMachine {
         this(items, null, 0);
     }
 
-    public static VendingMachine create(Items items) {
-        return new VendingMachine(items);
-    }
-
     /**
      * @param coinStatus     : 잔돈
      * @param items          : 구매 가능한 상품들

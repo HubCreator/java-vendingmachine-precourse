@@ -6,14 +6,14 @@ import java.util.List;
 
 public class Items {
     private final List<Item> items;
-    private final int minPrice;
+    private final Price minPrice;
 
     public Items(List<Item> items) {
         this.items = items;
         this.minPrice = getMinPrice();
     }
 
-    public int purchase(Item item) {
+    public Price purchase(Item item) {
         int itemIndex = items.indexOf(item);
         return items.get(itemIndex).purchase();
     }
@@ -33,8 +33,8 @@ public class Items {
         return amount.isGreaterOrEqualThan(minPrice);
     }
 
-    private int getMinPrice() {
-        int minPrice = Integer.MAX_VALUE;
+    private Price getMinPrice() {
+        Price minPrice = new Price(Integer.MAX_VALUE);
         for (Item item : items) {
             minPrice = item.getLowerOne(minPrice);
         }

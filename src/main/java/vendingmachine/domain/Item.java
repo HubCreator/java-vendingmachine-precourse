@@ -6,13 +6,13 @@ import java.util.Objects;
 
 public class Item {
     private final String itemName;
-    private int price;
+    private Price price;
     private int count;
 
     public Item(String itemName, int price, int count) {
         this(itemName);
         validatePrice(price);
-        this.price = price;
+        this.price = new Price(price);
         this.count = count;
     }
 
@@ -24,6 +24,19 @@ public class Item {
         if ((price < PriceConditions.MIN.value) || (price % PriceConditions.UNIT.value != 0)) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_RANGE_INPUT_PRICE.getMessage());
         }
+    }
+
+    public Price purchase() {
+        count--;
+        return price;
+    }
+
+    public boolean haveStock() {
+        return this.count > 0;
+    }
+
+    public Price getLowerOne(Price price) {
+        return Price.getLowerPrice(this.price, price);
     }
 
     @Override
@@ -41,19 +54,6 @@ public class Item {
     @Override
     public int hashCode() {
         return Objects.hash(itemName);
-    }
-
-    public int purchase() {
-        count--;
-        return price;
-    }
-
-    public boolean haveStock() {
-        return this.count > 0;
-    }
-
-    public int getLowerOne(int price) {
-        return Math.min(price, this.price);
     }
 
     private enum PriceConditions {
