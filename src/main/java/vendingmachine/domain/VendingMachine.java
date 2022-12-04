@@ -47,7 +47,7 @@ public class VendingMachine {
     }
 
     public String getBalance() {
-        return coinStatus.getBalance(purchase);
+        return coinStatus.getBalanceInfo(purchase);
     }
 
     public void purchase(Item item) {
