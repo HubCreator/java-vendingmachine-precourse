@@ -16,7 +16,6 @@ public class Controller {
     }
 
     public void run() {
-        vendingMachine.setPurchaseAmount(InputView.readPurchaseAmount());
         mainLogic();
         OutputView.printResult(vendingMachine);
     }
@@ -37,6 +36,8 @@ public class Controller {
         OutputView.printCoinStatus(coinStatus);
 
         Items items = InputView.readItems();
-        return VendingMachine.create(items, coinStatus);
+        int purchaseAmount = InputView.readPurchaseAmount();
+
+        return VendingMachine.create(coinStatus, items, purchaseAmount);
     }
 }

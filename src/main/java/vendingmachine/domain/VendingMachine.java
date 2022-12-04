@@ -7,21 +7,29 @@ public class VendingMachine {
     private final CoinStatus coinStatus;
     private int purchaseAmount;
 
-    private VendingMachine(Items items, CoinStatus coinStatus) {
+    private VendingMachine(Items items, CoinStatus coinStatus, int purchaseAmount) {
         this.items = items;
         this.coinStatus = coinStatus;
+        this.purchaseAmount = purchaseAmount;
     }
 
     private VendingMachine(Items items) {
-        this(items, null);
+        this(items, null, 0);
     }
 
     public static VendingMachine create(Items items) {
         return new VendingMachine(items);
     }
 
-    public static VendingMachine create(Items items, CoinStatus coinStatus) {
-        return new VendingMachine(items, coinStatus);
+    /**
+     *
+     * @param coinStatus : 잔돈
+     * @param items : 구매 가능한 상품들
+     * @param purchaseAmount : 투입 금액
+     * @return VendingMachine
+     */
+    public static VendingMachine create(CoinStatus coinStatus, Items items, int purchaseAmount) {
+        return new VendingMachine(items, coinStatus, purchaseAmount);
     }
 
     public boolean canPurchase(Item item) {
