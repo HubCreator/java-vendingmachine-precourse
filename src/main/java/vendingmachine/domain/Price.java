@@ -48,8 +48,8 @@ public class Price {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Price price1 = (Price) o;
-        return price == price1.price;
+        Price target = (Price) o;
+        return price == target.price;
     }
 
     @Override

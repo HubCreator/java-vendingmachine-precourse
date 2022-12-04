@@ -2,6 +2,7 @@ package vendingmachine.domain;
 
 import camp.nextstep.edu.missionutils.Randoms;
 import vendingmachine.enums.Coin;
+import vendingmachine.utils.GenerateRandomCoin;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -15,9 +16,17 @@ public class CoinStatus implements Iterable<Coin> {
 
     private static final String message = "자판기가 보유한 동전\n";
     private static final String messageFormat = "{0}원 - {1}개\n";
+    private static final List<Integer> entry;
 
     private final Map<Coin, Integer> coinMap;
     private static int amountTotal = 0;
+
+    static {
+        entry = new ArrayList<>();
+        for (Coin value : Coin.values()) {
+            entry.add(value.getAmount());
+        }
+    }
 
     private CoinStatus(List<Coin> coins) {
         coinMap = new EnumMap<>(Coin.class);
@@ -34,21 +43,16 @@ public class CoinStatus implements Iterable<Coin> {
     public static CoinStatus create(int amount) {
         List<Coin> result = new ArrayList<>();
         do {
-            int randomIndex = Randoms.pickNumberInList(getEntry());
-            Coin coin = Coin.getCoin(randomIndex);
-            int currentCoinAmount = coin.getAmount();
+            Coin randomCoin = GenerateRandomCoin.getRandomCoin(entry);
+            int currentCoinAmount = randomCoin.getAmount();
             if (amount >= currentCoinAmount) {
                 amountTotal += currentCoinAmount;
-                result.add(coin);
+                result.add(randomCoin);
                 amount -= currentCoinAmount;
             }
         } while (amount > 0);
 
         return new CoinStatus(result);
-    }
-
-    private static List<Integer> getEntry() {
-        return Arrays.asList(500, 100, 50, 10);
     }
 
     public String getStatus() {
