@@ -7,13 +7,13 @@ import java.util.Objects;
 public class Item {
     private final String itemName;
     private Price price;
-    private int count;
+    private Stock stock;
 
     public Item(String itemName, int price, int count) {
         this(itemName);
         validatePrice(price);
         this.price = new Price(price);
-        this.count = count;
+        this.stock = new Stock(count);
     }
 
     public Item(String itemName) {
@@ -27,12 +27,12 @@ public class Item {
     }
 
     public Price purchase() {
-        count--;
+        stock.decrease();
         return price;
     }
 
     public boolean haveStock() {
-        return this.count > 0;
+        return stock.haveStock();
     }
 
     public Price getLowerOne(Price price) {
