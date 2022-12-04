@@ -22,7 +22,7 @@ public class Item {
 
     private void validatePrice(int price) {
         if ((price < PriceConditions.MIN.value) || (price % PriceConditions.UNIT.value != 0)) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_RANGE_PRICE.getMessage());
+            throw new IllegalArgumentException(ErrorMessage.INVALID_RANGE_INPUT_PRICE.getMessage());
         }
     }
 

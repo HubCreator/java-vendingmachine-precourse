@@ -18,7 +18,7 @@ public class InputValidation {
             validateRange(value);
             return value;
         } catch (NumberFormatException exception) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_FORMAT.getMessage(), exception);
+            throw new IllegalArgumentException(ErrorMessage.IS_NOT_DIGIT.getMessage(), exception);
         }
     }
 
@@ -42,7 +42,12 @@ public class InputValidation {
 
     private static void validateItemFormat(String item) {
         if (item.charAt(0) != '[' || item.charAt(item.length() - 1) != ']') {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_RANGE_PRICE.getMessage());
+            throw new IllegalArgumentException(ErrorMessage.INVALID_FORMAT.getMessage());
+        }
+        for (int index = 1; index < item.length() - 1; index++) {
+            if (item.charAt(index) == '[' || item.charAt(index) == ']') {
+                throw new IllegalArgumentException(ErrorMessage.INVALID_FORMAT.getMessage());
+            }
         }
     }
 }
