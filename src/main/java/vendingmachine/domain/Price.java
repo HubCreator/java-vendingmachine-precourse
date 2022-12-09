@@ -1,12 +1,41 @@
 package vendingmachine.domain;
 
+import vendingmachine.enums.ConstVaribale;
+import vendingmachine.enums.ErrorMessage;
+
 import java.util.Objects;
 
 public class Price {
     private int price;
 
+    public Price(String price) {
+        this.price = validate(price);
+    }
+
     public Price(int price) {
         this.price = price;
+    }
+
+    private static int validate(String price) {
+        int result = toDigit(price);
+        validateRange(result);
+        return result;
+    }
+
+    private static void validateRange(int result) {
+        if ((result < ConstVaribale.MIN_PRICE) || (result % ConstVaribale.MIN_UNIT != 0)) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_RANGE_INPUT_PRICE.getMessage());
+        }
+    }
+
+    private static int toDigit(String price) {
+        int result;
+        try {
+            result = Integer.parseInt(price);
+        } catch (NumberFormatException exception) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_FORMAT.getMessage(), exception);
+        }
+        return result;
     }
 
     public static Price getLowerPrice(Price price1, Price price2) {

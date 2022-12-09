@@ -10,9 +10,8 @@ public class Item {
     private Price price;
     private Stock stock;
 
-    public Item(String itemName, int price, int count) {
+    public Item(String itemName, String price, String count) {
         this(itemName);
-        validatePrice(price);
         this.price = new Price(price);
         this.stock = new Stock(count);
     }
@@ -34,35 +33,7 @@ public class Item {
         if (orderTokens.countTokens() != 3) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_FORMAT.getMessage());
         }
-        String itemName = orderTokens.nextToken();
-        int price = validatePrice(orderTokens.nextToken());
-        int stock = validateStock(orderTokens.nextToken());
-        return new Item(itemName, price, stock);
-    }
-
-    private static int validatePrice(String price) {
-        int result;
-        try {
-            result = Integer.parseInt(price);
-            validatePrice(result);
-            return result;
-        } catch (NumberFormatException exception) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_FORMAT.getMessage(), exception);
-        }
-    }
-
-    private static void validatePrice(int price) {
-        if ((price < PriceConditions.MIN.value) || (price % PriceConditions.UNIT.value != 0)) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_RANGE_INPUT_PRICE.getMessage());
-        }
-    }
-
-    private static int validateStock(String stock) {
-        try {
-            return Integer.parseInt(stock);
-        } catch (NumberFormatException exception) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_FORMAT.getMessage(), exception);
-        }
+        return new Item(orderTokens.nextToken(), orderTokens.nextToken(), orderTokens.nextToken());
     }
 
     public Price purchase() {

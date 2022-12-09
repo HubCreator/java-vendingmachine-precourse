@@ -19,8 +19,8 @@ class VendingMachineTest {
     void init() {
         items = new Items(
                 Arrays.asList(
-                        new Item("콜라", 1500, 3),
-                        new Item("사이다", 1000, 20)));
+                        new Item("콜라", "1500", "3"),
+                        new Item("사이다", "1000", "20")));
         vendingMachine = VendingMachine.create(null,items, 3000);
     }
 
