@@ -1,6 +1,7 @@
 package vendingmachine.view;
 
 import camp.nextstep.edu.missionutils.Console;
+import vendingmachine.domain.CoinStatus;
 import vendingmachine.domain.Item;
 import vendingmachine.domain.Items;
 import vendingmachine.domain.VendingMachine;
@@ -19,11 +20,12 @@ public class InputView {
      *
      * @return int
      */
-    public static int readVendingMachineChange() {
+    public static CoinStatus readVendingMachineChange() {
         while (true) {
             try {
                 printMessage(INPUT_VENDING_MACHINE_AMOUNT);
-                return InputValidation.validateAmount(Console.readLine());
+                int amount = InputValidation.isDigit(Console.readLine());
+                return CoinStatus.create(amount);
             } catch (IllegalArgumentException exception) {
                 printMessage(exception);
             }
@@ -55,7 +57,7 @@ public class InputView {
         while (true) {
             try {
                 printMessage(INPUT_PURCHASE_AMOUNT);
-                return InputValidation.validateAmount(Console.readLine());
+                return InputValidation.isDigit(Console.readLine());
             } catch (IllegalArgumentException exception) {
                 printMessage(exception);
             }

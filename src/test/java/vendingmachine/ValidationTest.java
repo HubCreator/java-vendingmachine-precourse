@@ -6,11 +6,11 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import vendingmachine.domain.CoinStatus;
 import vendingmachine.enums.ErrorMessage;
 import vendingmachine.utils.InputValidation;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class ValidationTest {
@@ -21,7 +21,9 @@ class ValidationTest {
         @ParameterizedTest
         @ValueSource(strings = {"450", "1000", "100"})
         void 정상적인_투입_금액(String input) {
-            assertThatCode(() -> InputValidation.validateAmount(input))
+            assertThatCode(() -> InputValidation.isDigit(input))
+                    .doesNotThrowAnyException();
+            assertThatCode(() -> CoinStatus.create(Integer.parseInt(input)))
                     .doesNotThrowAnyException();
         }
 
@@ -30,8 +32,8 @@ class ValidationTest {
 
             @ParameterizedTest
             @ValueSource(strings = {"101", "99"})
-            void 유효_범위가_아닌_입력(String input) {
-                assertThatThrownBy(() -> InputValidation.validateAmount(input))
+            void 유효_범위가_아닌_입력(int input) {
+                assertThatThrownBy(() -> CoinStatus.create(input))
                         .isInstanceOf(IllegalArgumentException.class)
                         .hasMessage(ErrorMessage.INVALID_RANGE_PRICE.getMessage());
             }
@@ -39,9 +41,13 @@ class ValidationTest {
             @ParameterizedTest
             @ValueSource(strings = {"", " ", "hello"})
             void 공백_혹은_문자열_입력(String input) {
-                assertThatThrownBy(() -> InputValidation.validateAmount(input))
+                assertThatThrownBy(() -> InputValidation.isDigit(input))
                         .isInstanceOf(IllegalArgumentException.class)
                         .hasMessage(ErrorMessage.IS_NOT_DIGIT.getMessage());
+
+                /*assertThatThrownBy(() -> CoinStatus.create(Integer.parseInt(input)))
+                        .isInstanceOf(IllegalArgumentException.class)
+                        .hasMessage(ErrorMessage.IS_NOT_DIGIT.getMessage());*/
             }
         }
     }

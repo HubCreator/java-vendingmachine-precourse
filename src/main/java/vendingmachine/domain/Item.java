@@ -3,6 +3,7 @@ package vendingmachine.domain;
 import vendingmachine.enums.ErrorMessage;
 
 import java.util.Objects;
+import java.util.StringTokenizer;
 
 public class Item {
     private final String itemName;
@@ -20,9 +21,47 @@ public class Item {
         this.itemName = itemName;
     }
 
-    private void validatePrice(int price) {
+    public static Item createOrder(String order) {
+        return validate(order);
+    }
+
+    private static Item validate(String order) {
+        if (order.charAt(0) != '[' || order.charAt(order.length() - 1) != ']') {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_FORMAT.getMessage());
+        }
+
+        StringTokenizer orderTokens = new StringTokenizer(order, "[],");
+        if (orderTokens.countTokens() != 3) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_FORMAT.getMessage());
+        }
+        String itemName = orderTokens.nextToken();
+        int price = validatePrice(orderTokens.nextToken());
+        int stock = validateStock(orderTokens.nextToken());
+        return new Item(itemName, price, stock);
+    }
+
+    private static int validatePrice(String price) {
+        int result;
+        try {
+            result = Integer.parseInt(price);
+            validatePrice(result);
+            return result;
+        } catch (NumberFormatException exception) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_FORMAT.getMessage(), exception);
+        }
+    }
+
+    private static void validatePrice(int price) {
         if ((price < PriceConditions.MIN.value) || (price % PriceConditions.UNIT.value != 0)) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_RANGE_INPUT_PRICE.getMessage());
+        }
+    }
+
+    private static int validateStock(String stock) {
+        try {
+            return Integer.parseInt(stock);
+        } catch (NumberFormatException exception) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_FORMAT.getMessage(), exception);
         }
     }
 

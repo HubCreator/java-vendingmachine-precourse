@@ -31,8 +31,7 @@ public class Controller {
     }
 
     private VendingMachine initVendingMachine() {
-        int changeTotal = InputView.readVendingMachineChange();
-        CoinStatus coinStatus = CoinStatus.create(changeTotal);
+        CoinStatus coinStatus = InputView.readVendingMachineChange();
         OutputView.printCoinStatus(coinStatus);
 
         Items items = InputView.readItems();

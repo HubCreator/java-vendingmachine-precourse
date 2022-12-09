@@ -13,10 +13,6 @@ public class VendingMachine {
         this.purchase = new Price(purchase);
     }
 
-    private VendingMachine(Items items) {
-        this(items, null, 0);
-    }
-
     /**
      * @param coinStatus     : 잔돈
      * @param items          : 구매 가능한 상품들

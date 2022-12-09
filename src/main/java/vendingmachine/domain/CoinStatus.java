@@ -1,6 +1,8 @@
 package vendingmachine.domain;
 
 import vendingmachine.enums.Coin;
+import vendingmachine.enums.ConstVaribale;
+import vendingmachine.enums.ErrorMessage;
 import vendingmachine.utils.GenerateRandomCoin;
 
 import java.text.MessageFormat;
@@ -41,6 +43,12 @@ public class CoinStatus implements Iterable<Coin> {
     }
 
     public static CoinStatus create(int amount) {
+        validate(amount);
+        List<Coin> result = mapCoins(amount);
+        return new CoinStatus(result);
+    }
+
+    private static List<Coin> mapCoins(int amount) {
         List<Coin> result = new ArrayList<>();
         do {
             Coin randomCoin = GenerateRandomCoin.getRandomCoin(entry);
@@ -50,21 +58,23 @@ public class CoinStatus implements Iterable<Coin> {
                 amount -= currentCoinAmount;
             }
         } while (amount > 0);
+        return result;
+    }
 
-        return new CoinStatus(result);
+    private static void validate(int amount) {
+        if (amount < ConstVaribale.MIN_PRICE || amount % ConstVaribale.MIN_UNIT != 0) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_RANGE_PRICE.getMessage());
+        }
     }
 
     public String getStatus() {
         StringBuilder result = new StringBuilder(message);
         for (Map.Entry<Coin, Integer> e : coinMap.entrySet()) {
-            result.append(MessageFormat.format(messageFormat, e.getKey().getAmount(), e.getValue()));
+            result.append(MessageFormat.format(messageFormat,
+                    e.getKey().getAmount(), e.getValue()));
         }
         return result.toString();
     }
-
-   /* public boolean isSameAmountTotal(int value) {
-        return change == value;
-    }*/
 
     @Override
     public Iterator<Coin> iterator() {
