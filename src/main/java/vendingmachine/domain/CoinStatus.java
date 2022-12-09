@@ -48,6 +48,12 @@ public class CoinStatus implements Iterable<Coin> {
         return new CoinStatus(result);
     }
 
+    private static void validate(int amount) {
+        if (amount < ConstVaribale.MIN_PRICE || amount % ConstVaribale.MIN_UNIT != 0) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_RANGE_PRICE.getMessage());
+        }
+    }
+
     private static List<Coin> mapCoins(int amount) {
         List<Coin> result = new ArrayList<>();
         do {
@@ -61,12 +67,6 @@ public class CoinStatus implements Iterable<Coin> {
         return result;
     }
 
-    private static void validate(int amount) {
-        if (amount < ConstVaribale.MIN_PRICE || amount % ConstVaribale.MIN_UNIT != 0) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_RANGE_PRICE.getMessage());
-        }
-    }
-
     public String getStatus() {
         StringBuilder result = new StringBuilder(message);
         for (Map.Entry<Coin, Integer> e : coinMap.entrySet()) {
@@ -74,11 +74,6 @@ public class CoinStatus implements Iterable<Coin> {
                     e.getKey().getAmount(), e.getValue()));
         }
         return result.toString();
-    }
-
-    @Override
-    public Iterator<Coin> iterator() {
-        return coinMap.keySet().iterator();
     }
 
     public String getChangeInfo(Price purchase) {
@@ -104,5 +99,10 @@ public class CoinStatus implements Iterable<Coin> {
             coinMap.put(e.getKey(), e.getValue() - 1);
         }
         return count;
+    }
+
+    @Override
+    public Iterator<Coin> iterator() {
+        return coinMap.keySet().iterator();
     }
 }

@@ -10,7 +10,8 @@ import vendingmachine.domain.CoinStatus;
 import vendingmachine.enums.ErrorMessage;
 import vendingmachine.utils.InputValidation;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class ValidationTest {

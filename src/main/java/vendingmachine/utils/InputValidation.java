@@ -29,6 +29,12 @@ public class InputValidation {
         }
     }
 
+    private static void validateUnit(int value) {
+        if ( value % ConstVaribale.MIN_UNIT != 0) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_RANGE_PRICE.getMessage());
+        }
+    }
+
 
     public static Items validateItem(String input) {
         List<Item> result = new ArrayList<>();
@@ -41,5 +47,11 @@ public class InputValidation {
             result.add(Item.createOrder(tokens.nextToken()));
         }
         return new Items(result);
+    }
+
+    public static int isValidInputAmount(String input) {
+        int digit = isDigit(input);
+        validateUnit(digit);
+        return digit;
     }
 }

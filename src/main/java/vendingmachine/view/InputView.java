@@ -57,7 +57,7 @@ public class InputView {
         while (true) {
             try {
                 printMessage(INPUT_PURCHASE_AMOUNT);
-                return InputValidation.isDigit(Console.readLine());
+                return InputValidation.isValidInputAmount(Console.readLine());
             } catch (IllegalArgumentException exception) {
                 printMessage(exception);
             }

@@ -14,5 +14,4 @@ public class Stock {
     public boolean haveStock() {
         return stock > 0;
     }
-
 }
