@@ -26,6 +26,16 @@ public class Controller {
     private void initStatusMap() {
         statusMap.put(Status.INPUT_CHANGE, this::inputChange);
         statusMap.put(Status.INPUT_ITEMS_INFO, this::inputItemsInfo);
+        statusMap.put(Status.INPUT_MONEY, this::inputMoney);
+    }
+
+    public Status run(Status status) {
+        try {
+            return statusMap.get(status).get();
+        } catch (IllegalArgumentException exception) {
+            System.out.println(exception.getMessage());
+            return status;
+        }
     }
 
     private Status inputChange() {
@@ -41,12 +51,8 @@ public class Controller {
         return Status.INPUT_MONEY;
     }
 
-    public Status run(Status status) {
-        try {
-            return statusMap.get(status).get();
-        } catch (IllegalArgumentException exception) {
-            System.out.println(exception.getMessage());
-            return status;
-        }
+    private Status inputMoney() {
+
+        return Status.INPUT_ITEM_NAME;
     }
 }

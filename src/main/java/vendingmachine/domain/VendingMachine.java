@@ -56,6 +56,7 @@ public class VendingMachine {
         List<Item> result = new ArrayList<>();
         String[] items = itemsInfo.split(";");
         for (String item : items) {
+            item = item.substring(1, item.length() - 1);
             String[] infos = item.split(",");
             result.add(new Item(infos[0], infos[1], infos[2]));
         }
