@@ -1,11 +1,9 @@
 package vendingmachine.domain;
 
-import vendingmachine.domain.error.ErrorMessage;
-
 public class Price {
 
-    public static final int MIN_PRICE = 100;
-    public static final int MIN_UNIT = 10;
+    private static final int MIN_PRICE = 100;
+    private static final int MIN_UNIT = 10;
 
     private final int price;
 
@@ -15,8 +13,11 @@ public class Price {
 
     private int validate(String price) {
         int value = validateDigit(price);
-        if (value < MIN_PRICE || value % MIN_UNIT != 0) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_ITEM_INPUT_FORMAT.getMessage());
+        if (value < MIN_PRICE ) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_PRICE.message);
+        }
+        if (value % MIN_UNIT != 0) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_UNIT.message);
         }
         return value;
     }
@@ -25,7 +26,21 @@ public class Price {
         try {
             return Integer.parseInt(price);
         } catch (NumberFormatException exception) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_ITEM_INPUT_FORMAT.getMessage(), exception);
+            throw new IllegalArgumentException(ErrorMessage.INVALID_TYPE.message, exception);
         }
     }
+
+    private enum ErrorMessage {
+        INVALID_PRICE("상품의 가격으로는 %d원 이상을 입력해야 합니다.", MIN_PRICE),
+        INVALID_UNIT("상품의 가격은 %d원 단위어야 합니다.", MIN_UNIT),
+        INVALID_TYPE("상품의 가격은 숫자로 입력해야 합니다.");
+
+        private static final String errorHead = "[ERROR] ";
+        private final String message;
+
+        ErrorMessage(String message, Object... replaces) {
+            this.message = errorHead + String.format(message, replaces);
+        }
+    }
+
 }

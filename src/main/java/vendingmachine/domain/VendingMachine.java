@@ -11,13 +11,22 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class VendingMachine {
+    private static final int MIN_UNIT = 10;
+
     private final int change;
     private final Map<Coin, Integer> changeMap;
     private Items items;
 
     public VendingMachine(int change) {
-        this.change = change;
+        this.change = validate(change);
         this.changeMap = getChangeMap(change);
+    }
+
+    private int validate(int change) {
+        if (change % MIN_UNIT != 0) {
+            throw new IllegalArgumentException("10 단위로 입력하셔야 합니다.");
+        }
+        return change;
     }
 
     private Map<Coin, Integer> getChangeMap(int amount) {
