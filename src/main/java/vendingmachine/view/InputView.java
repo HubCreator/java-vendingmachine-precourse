@@ -1,6 +1,7 @@
 package vendingmachine.view;
 
 import camp.nextstep.edu.missionutils.Console;
+import vendingmachine.domain.error.ErrorMessage;
 import vendingmachine.dto.input.ReadItemsInfoDto;
 import vendingmachine.dto.input.ReadChangeDto;
 
@@ -39,7 +40,7 @@ public class InputView {
         String[] items = input.split(";");
         for (String item : items) {
             if (item.charAt(0) != '[' || item.charAt(item.length() - 1) != ']') {
-                throw new IllegalArgumentException("올바르지 않은 상품 입력 형식입니다.");
+                throw new IllegalArgumentException(ErrorMessage.INVALID_ITEM_INPUT_FORMAT.getMessage());
             }
         }
         return items;
@@ -49,7 +50,7 @@ public class InputView {
         for (String item : items) {
             String[] infos = item.split(",");
             if (infos.length != 3) {
-                throw new IllegalArgumentException("올바르지 않은 상품 입력 형식입니다.");
+                throw new IllegalArgumentException(ErrorMessage.INVALID_ITEM_INPUT_FORMAT.getMessage());
             }
         }
     }
