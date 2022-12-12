@@ -1,9 +1,12 @@
 package vendingmachine.domain;
 
+import vendingmachine.domain.items.Item;
+import vendingmachine.domain.items.ItemPrice;
+
 public class Money {
     private static final int MIN_UNIT = 10;
 
-    private final int money;
+    private int money;
 
     public Money(int money) {
         this.money = validate(money);
@@ -15,4 +18,21 @@ public class Money {
         }
         return change;
     }
+
+    public int getMoney() {
+        return money;
+    }
+
+    public boolean isLowerThan(Money target) {
+        return this.money < target.money;
+    }
+
+    public void decrease(ItemPrice itemPrice) {
+        decrease(itemPrice.getPrice());
+    }
+
+    private void decrease(Money price) {
+        this.money -= price.money;
+    }
 }
+

@@ -1,7 +1,11 @@
 package vendingmachine.domain.items;
 
 public class ItemStock {
-    private final int stock;
+    private int stock;
+
+    public ItemStock() {
+        this.stock = 0;
+    }
 
     public ItemStock(String stock) {
         this.stock = validateDigit(stock);
@@ -13,6 +17,14 @@ public class ItemStock {
         } catch (NumberFormatException exception) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_TYPE.message, exception);
         }
+    }
+
+    public void decrease() {
+        this.stock--;
+    }
+
+    public boolean hasStock() {
+        return stock > 0;
     }
 
     private enum ErrorMessage {

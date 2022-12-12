@@ -1,14 +1,20 @@
 package vendingmachine.domain.items;
 
+import vendingmachine.domain.Money;
+
 public class ItemPrice {
 
     private static final int MIN_PRICE = 100;
     private static final int MIN_UNIT = 10;
 
-    private final int price;
+    private final Money price;
+
+    public ItemPrice() {
+        this.price = new Money(0);
+    }
 
     public ItemPrice(String price) {
-        this.price = validate(price);
+        this.price = new Money(validate(price));
     }
 
     private int validate(String price) {
@@ -28,6 +34,14 @@ public class ItemPrice {
         } catch (NumberFormatException exception) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_TYPE.message, exception);
         }
+    }
+
+    public boolean isLowerThan(Money target) {
+        return this.price.isLowerThan(target);
+    }
+
+    public Money getPrice() {
+        return price;
     }
 
     private enum ErrorMessage {

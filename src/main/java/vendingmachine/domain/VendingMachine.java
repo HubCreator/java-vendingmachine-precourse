@@ -3,6 +3,7 @@ package vendingmachine.domain;
 import camp.nextstep.edu.missionutils.Randoms;
 import vendingmachine.domain.items.Item;
 import vendingmachine.domain.items.Items;
+import vendingmachine.dto.output.PrintInputMoneyDto;
 import vendingmachine.dto.output.PrintVendingMachineCoinDto;
 
 import java.util.ArrayList;
@@ -47,6 +48,10 @@ public class VendingMachine {
         return new PrintVendingMachineCoinDto(changeMap);
     }
 
+    public PrintInputMoneyDto printInputMoney() {
+        return new PrintInputMoneyDto(inputMoney);
+    }
+
     public void setItems(String itemsInfo) {
         List<Item> result = new ArrayList<>();
         String[] items = itemsInfo.split(";");
@@ -60,5 +65,11 @@ public class VendingMachine {
 
     public void setMoney(int amount) {
         this.inputMoney = new Money(amount);
+    }
+
+    public void purchase(Item item) {
+        Item result = items.canPurchase(item, inputMoney);
+        result.purchase();
+        inputMoney.decrease(result.getItemPrice());
     }
 }

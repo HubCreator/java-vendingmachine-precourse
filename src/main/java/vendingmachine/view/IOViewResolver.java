@@ -1,8 +1,10 @@
 package vendingmachine.view;
 
 import vendingmachine.dto.input.ReadChangeDto;
+import vendingmachine.dto.input.ReadItemNameDto;
 import vendingmachine.dto.input.ReadItemsInfoDto;
 import vendingmachine.dto.input.ReadMoneyDto;
+import vendingmachine.dto.output.PrintInputMoneyDto;
 import vendingmachine.dto.output.PrintVendingMachineCoinDto;
 import vendingmachine.view.exception.NotFoundViewException;
 
@@ -24,12 +26,13 @@ public class IOViewResolver {
         inputViewMap.put(ReadChangeDto.class, inputView::readChange);
         inputViewMap.put(ReadItemsInfoDto.class, inputView::readItemsInfo);
         inputViewMap.put(ReadMoneyDto.class, inputView::readMoney);
+        inputViewMap.put(ReadItemNameDto.class, inputView::readItemName);
 
     }
 
     private void initOutputViewMappings(OutputView outputView) {
         outputViewMap.put(PrintVendingMachineCoinDto.class, dto -> outputView.printVendingMachineCoin((PrintVendingMachineCoinDto) dto));
-//        outputViewMap.put(PrintResultDto.class, dto -> outputView.printResult((PrintResultDto) dto));
+        outputViewMap.put(PrintInputMoneyDto.class, dto -> outputView.printInputMoney((PrintInputMoneyDto) dto));
 //        outputViewMap.put(PrintExceptionDto.class, dto -> outputView.printException((PrintExceptionDto) dto));
     }
 

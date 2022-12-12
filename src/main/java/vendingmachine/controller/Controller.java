@@ -2,7 +2,9 @@ package vendingmachine.controller;
 
 import vendingmachine.domain.Status;
 import vendingmachine.domain.VendingMachine;
+import vendingmachine.domain.items.Item;
 import vendingmachine.dto.input.ReadChangeDto;
+import vendingmachine.dto.input.ReadItemNameDto;
 import vendingmachine.dto.input.ReadItemsInfoDto;
 import vendingmachine.dto.input.ReadMoneyDto;
 import vendingmachine.view.IOViewResolver;
@@ -56,6 +58,13 @@ public class Controller {
     private Status inputMoney() {
         ReadMoneyDto readMoneyDto = ioViewResolver.inputViewResolve(ReadMoneyDto.class);
         vendingMachine.setMoney(readMoneyDto.getMoney());
+        return Status.INPUT_ITEM_NAME;
+    }
+
+    private Status inputItemName() {
+        ioViewResolver.outputViewResolve(vendingMachine.printInputMoney());
+        ReadItemNameDto readItemNameDto = ioViewResolver.inputViewResolve(ReadItemNameDto.class);
+        vendingMachine.purchase(new Item(readItemNameDto.getItemName()));
         return Status.INPUT_ITEM_NAME;
     }
 }

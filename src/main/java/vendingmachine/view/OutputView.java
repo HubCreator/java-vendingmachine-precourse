@@ -1,6 +1,8 @@
 package vendingmachine.view;
 
 import vendingmachine.domain.Coin;
+import vendingmachine.domain.Money;
+import vendingmachine.dto.output.PrintInputMoneyDto;
 import vendingmachine.dto.output.PrintVendingMachineCoinDto;
 
 import java.util.Map;
@@ -10,7 +12,6 @@ public class OutputView {
     }
 
     private static class OutputViewSingletonHelper {
-
         private static final OutputView OUTPUT_VIEW = new OutputView();
     }
 
@@ -29,5 +30,10 @@ public class OutputView {
             result.append(String.format("%d원 - %d개\n", value.getAmount(), 0));
         }
         System.out.println(result);
+    }
+
+    public void printInputMoney(PrintInputMoneyDto dto) {
+        Money inputMoney = dto.getInputMoney();
+        System.out.println(String.format("\n투입금액 : %d원", inputMoney.getMoney()));
     }
 }
