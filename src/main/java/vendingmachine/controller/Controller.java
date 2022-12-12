@@ -28,6 +28,7 @@ public class Controller {
         statusMap.put(Status.INPUT_CHANGE, this::inputChange);
         statusMap.put(Status.INPUT_ITEMS_INFO, this::inputItemsInfo);
         statusMap.put(Status.INPUT_MONEY, this::inputMoney);
+        statusMap.put(Status.INPUT_ITEM_NAME, this::inputItemName);
     }
 
     public Status run(Status status) {
@@ -48,12 +49,13 @@ public class Controller {
 
     private Status inputItemsInfo() {
         ReadItemsInfoDto readItemsInfoDto = ioViewResolver.inputViewResolve(ReadItemsInfoDto.class);
-        vendingMachine.addItems(readItemsInfoDto.getItemsInfo());
+        vendingMachine.setItems(readItemsInfoDto.getItemsInfo());
         return Status.INPUT_MONEY;
     }
 
     private Status inputMoney() {
         ReadMoneyDto readMoneyDto = ioViewResolver.inputViewResolve(ReadMoneyDto.class);
+        vendingMachine.setMoney(readMoneyDto.getMoney());
         return Status.INPUT_ITEM_NAME;
     }
 }

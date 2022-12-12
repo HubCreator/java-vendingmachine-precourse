@@ -41,7 +41,7 @@ public class InputView {
         printViewMessage(ViewMessage.INPUT_MONEY);
         String input = Console.readLine();
 
-        return new ReadMoneyDto();
+        return new ReadMoneyDto(validateDigit(input));
     }
 
 

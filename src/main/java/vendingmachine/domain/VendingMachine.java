@@ -13,22 +13,15 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class VendingMachine {
-    private static final int MIN_UNIT = 10;
 
-    private final int change;
+    private final Money change;
     private final Map<Coin, Integer> changeMap;
     private Items items;
+    private Money inputMoney;
 
     public VendingMachine(int change) {
-        this.change = validate(change);
+        this.change = new Money(change);
         this.changeMap = getChangeMap(change);
-    }
-
-    private int validate(int change) {
-        if (change % MIN_UNIT != 0) {
-            throw new IllegalArgumentException("10 단위로 입력하셔야 합니다.");
-        }
-        return change;
     }
 
     private Map<Coin, Integer> getChangeMap(int amount) {
@@ -54,7 +47,7 @@ public class VendingMachine {
         return new PrintVendingMachineCoinDto(changeMap);
     }
 
-    public void addItems(String itemsInfo) {
+    public void setItems(String itemsInfo) {
         List<Item> result = new ArrayList<>();
         String[] items = itemsInfo.split(";");
         for (String item : items) {
@@ -63,5 +56,9 @@ public class VendingMachine {
             result.add(new Item(infos[0], infos[1], infos[2]));
         }
         this.items = new Items(result);
+    }
+
+    public void setMoney(int amount) {
+        this.inputMoney = new Money(amount);
     }
 }
