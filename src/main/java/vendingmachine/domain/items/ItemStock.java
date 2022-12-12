@@ -1,9 +1,9 @@
-package vendingmachine.domain;
+package vendingmachine.domain.items;
 
-public class Stock {
+public class ItemStock {
     private final int stock;
 
-    public Stock(String stock) {
+    public ItemStock(String stock) {
         this.stock = validateDigit(stock);
     }
 

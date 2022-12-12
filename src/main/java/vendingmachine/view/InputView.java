@@ -3,6 +3,7 @@ package vendingmachine.view;
 import camp.nextstep.edu.missionutils.Console;
 import vendingmachine.dto.input.ReadItemsInfoDto;
 import vendingmachine.dto.input.ReadChangeDto;
+import vendingmachine.dto.input.ReadMoneyDto;
 
 public class InputView {
 
@@ -35,6 +36,14 @@ public class InputView {
 
         return new ReadItemsInfoDto(validateFormat(input));
     }
+
+    public ReadMoneyDto readMoney() {
+        printViewMessage(ViewMessage.INPUT_MONEY);
+        String input = Console.readLine();
+
+        return new ReadMoneyDto();
+    }
+
 
     private String validateFormat(String input) {
         String[] items = validateItemsFormat(input);
@@ -77,7 +86,8 @@ public class InputView {
 
     private enum ViewMessage {
         INPUT_CHANGE("자판기가 보유하고 있는 금액을 입력해 주세요."),
-        INPUT_READ_ITEMS_INFO("상품명과 가격, 수량을 입력해 주세요.\n");
+        INPUT_READ_ITEMS_INFO("상품명과 가격, 수량을 입력해 주세요.\n"),
+        INPUT_MONEY("투입 금액을 입력해 주세요.");
 
         private final String message;
 

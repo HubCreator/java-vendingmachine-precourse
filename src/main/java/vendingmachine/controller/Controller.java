@@ -4,6 +4,7 @@ import vendingmachine.domain.Status;
 import vendingmachine.domain.VendingMachine;
 import vendingmachine.dto.input.ReadChangeDto;
 import vendingmachine.dto.input.ReadItemsInfoDto;
+import vendingmachine.dto.input.ReadMoneyDto;
 import vendingmachine.view.IOViewResolver;
 
 import java.util.EnumMap;
@@ -52,7 +53,7 @@ public class Controller {
     }
 
     private Status inputMoney() {
-
+        ReadMoneyDto readMoneyDto = ioViewResolver.inputViewResolve(ReadMoneyDto.class);
         return Status.INPUT_ITEM_NAME;
     }
 }

@@ -1,6 +1,8 @@
 package vendingmachine.domain;
 
 import camp.nextstep.edu.missionutils.Randoms;
+import vendingmachine.domain.items.Item;
+import vendingmachine.domain.items.Items;
 import vendingmachine.dto.output.PrintVendingMachineCoinDto;
 
 import java.util.ArrayList;

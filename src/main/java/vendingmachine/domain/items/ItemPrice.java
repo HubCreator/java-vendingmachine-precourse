@@ -1,13 +1,13 @@
-package vendingmachine.domain;
+package vendingmachine.domain.items;
 
-public class Price {
+public class ItemPrice {
 
     private static final int MIN_PRICE = 100;
     private static final int MIN_UNIT = 10;
 
     private final int price;
 
-    public Price(String price) {
+    public ItemPrice(String price) {
         this.price = validate(price);
     }
 
