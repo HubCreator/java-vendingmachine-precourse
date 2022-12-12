@@ -1,4 +1,4 @@
-package vendingmachine.dto;
+package vendingmachine.dto.input;
 
 public class ReadInputCoinDto {
     private final int vendingMachineCoin;

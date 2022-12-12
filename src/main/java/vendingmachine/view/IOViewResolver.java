@@ -1,6 +1,7 @@
 package vendingmachine.view;
 
-import vendingmachine.dto.ReadInputCoinDto;
+import vendingmachine.dto.input.ReadInputCoinDto;
+import vendingmachine.dto.output.PrintVendingMachineCoinDto;
 import vendingmachine.view.exception.NotFoundViewException;
 
 import java.util.HashMap;
@@ -22,7 +23,7 @@ public class IOViewResolver {
     }
 
     private void initOutputViewMappings(OutputView outputView) {
-//        outputViewMap.put(PrintMapDto.class, dto -> outputView.printMap((PrintMapDto) dto));
+        outputViewMap.put(PrintVendingMachineCoinDto.class, dto -> outputView.printVendingMachineCoin((PrintVendingMachineCoinDto) dto));
 //        outputViewMap.put(PrintResultDto.class, dto -> outputView.printResult((PrintResultDto) dto));
 //        outputViewMap.put(PrintExceptionDto.class, dto -> outputView.printException((PrintExceptionDto) dto));
     }
