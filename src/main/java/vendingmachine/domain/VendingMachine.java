@@ -11,23 +11,23 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class VendingMachine {
-    private final int coin;
-    private final Map<Coin, Integer> coinMap;
+    private final int change;
+    private final Map<Coin, Integer> changeMap;
     private Items items;
 
-    public VendingMachine(int coin) {
-        this.coin = coin;
-        this.coinMap = getCoinMap(coin);
+    public VendingMachine(int change) {
+        this.change = change;
+        this.changeMap = getChangeMap(change);
     }
 
-    private Map<Coin, Integer> getCoinMap(int amount) {
-        Map<Coin, Integer> coinMap = new EnumMap<>(Coin.class);
+    private Map<Coin, Integer> getChangeMap(int amount) {
+        Map<Coin, Integer> result = new EnumMap<>(Coin.class);
         do {
             Coin randomCoin = getRandomCoinWithLimit(amount);
-            coinMap.put(randomCoin, coinMap.getOrDefault(randomCoin, 0) + 1);
+            result.put(randomCoin, result.getOrDefault(randomCoin, 0) + 1);
             amount -= randomCoin.getAmount();
         } while (amount > 0);
-        return coinMap;
+        return result;
     }
 
     private Coin getRandomCoinWithLimit(int amount) {
@@ -40,7 +40,7 @@ public class VendingMachine {
     }
 
     public PrintVendingMachineCoinDto printCoinStatus() {
-        return new PrintVendingMachineCoinDto(coinMap);
+        return new PrintVendingMachineCoinDto(changeMap);
     }
 
     public void addItems(String itemsInfo) {
