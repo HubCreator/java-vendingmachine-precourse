@@ -2,7 +2,8 @@ package vendingmachine.controller;
 
 import vendingmachine.domain.Status;
 import vendingmachine.domain.VendingMachine;
-import vendingmachine.dto.input.ReadInputCoinDto;
+import vendingmachine.dto.input.ReadChangeDto;
+import vendingmachine.dto.input.ReadItemsInfoDto;
 import vendingmachine.view.IOViewResolver;
 
 import java.util.EnumMap;
@@ -23,19 +24,21 @@ public class Controller {
     }
 
     private void initStatusMap() {
-        statusMap.put(Status.INPUT_COIN, this::inputCoin);
+        statusMap.put(Status.INPUT_CHANGE, this::inputChange);
         statusMap.put(Status.INPUT_ITEMS_INFO, this::inputItemsInfo);
     }
 
-    private Status inputItemsInfo() {
-        return null;
-    }
-
-    private Status inputCoin() {
-        ReadInputCoinDto readInputCoinDto = ioViewResolver.inputViewResolve(ReadInputCoinDto.class);
-        vendingMachine = new VendingMachine(readInputCoinDto.getVendingMachineCoin());
+    private Status inputChange() {
+        ReadChangeDto readChangeDto = ioViewResolver.inputViewResolve(ReadChangeDto.class);
+        vendingMachine = new VendingMachine(readChangeDto.getVendingMachineCoin());
         ioViewResolver.outputViewResolve(vendingMachine.printCoinStatus());
         return Status.INPUT_ITEMS_INFO;
+    }
+
+    private Status inputItemsInfo() {
+        ReadItemsInfoDto readItemsInfoDto = ioViewResolver.inputViewResolve(ReadItemsInfoDto.class);
+        vendingMachine.addItems(readItemsInfoDto.getItemsInfo());
+        return Status.INPUT_MONEY;
     }
 
     public Status run(Status status) {

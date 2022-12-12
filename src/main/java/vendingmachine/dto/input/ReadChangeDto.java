@@ -1,9 +1,9 @@
 package vendingmachine.dto.input;
 
-public class ReadInputCoinDto {
+public class ReadChangeDto {
     private final int vendingMachineCoin;
 
-    public ReadInputCoinDto(int vendingMachineCoin) {
+    public ReadChangeDto(int vendingMachineCoin) {
         this.vendingMachineCoin = vendingMachineCoin;
     }
 

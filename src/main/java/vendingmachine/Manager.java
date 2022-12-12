@@ -7,7 +7,7 @@ import vendingmachine.view.InputView;
 import vendingmachine.view.OutputView;
 
 public final class Manager {
-    private static final Status INITIAL_STATUS = Status.INPUT_COIN;
+    private static final Status INITIAL_STATUS = Status.INPUT_CHANGE;
 
     private Manager() {
 
