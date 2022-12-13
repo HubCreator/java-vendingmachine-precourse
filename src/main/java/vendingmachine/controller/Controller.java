@@ -10,7 +10,7 @@ import vendingmachine.dto.input.ReadItemsInfoDto;
 import vendingmachine.dto.input.ReadMoneyDto;
 import vendingmachine.dto.output.PrintExceptionDto;
 import vendingmachine.util.RandomNumbersGenerator;
-import vendingmachine.util.StandardRandomNumbersGenerate;
+import vendingmachine.util.StandardRandomNumbersGenerator;
 import vendingmachine.view.IOViewResolver;
 
 import java.util.EnumMap;
@@ -49,7 +49,7 @@ public class Controller {
 
     private Status inputChange() {
         ReadChangeDto readChangeDto = ioViewResolver.inputViewResolve(ReadChangeDto.class);
-        RandomNumbersGenerator generator = new StandardRandomNumbersGenerate(Coin.values());
+        RandomNumbersGenerator generator = new StandardRandomNumbersGenerator(Coin.values());
         vendingMachine = new VendingMachine(readChangeDto.getVendingMachineCoin(), generator);
         ioViewResolver.outputViewResolve(vendingMachine.printCoinStatus());
         return Status.INPUT_ITEMS_INFO;

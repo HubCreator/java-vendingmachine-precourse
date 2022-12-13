@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
-public class StandardRandomNumbersGenerate implements RandomNumbersGenerator {
+public class StandardRandomNumbersGenerator implements RandomNumbersGenerator {
     private final Coin[] coins;
 
-    public StandardRandomNumbersGenerate(Coin[] coins) {
+    public StandardRandomNumbersGenerator(Coin[] coins) {
         this.coins = coins;
     }
 
@@ -33,7 +33,7 @@ public class StandardRandomNumbersGenerate implements RandomNumbersGenerator {
                 .map(Coin::getAmount)
                 .filter(m -> m <= amount)
                 .collect(Collectors.toList());
-        int coin = Randoms.pickNumberInList(entry);
-        return Coin.map(coin);
+
+        return Coin.map(Randoms.pickNumberInList(entry));
     }
 }
