@@ -30,7 +30,6 @@ public class VendingMachine {
         return new PrintInputMoneyDto(inputMoney);
     }
 
-
     public PrintChangeDto getChangeMap() {
         TreeMap<Coin, Integer> result = new TreeMap<>();
 

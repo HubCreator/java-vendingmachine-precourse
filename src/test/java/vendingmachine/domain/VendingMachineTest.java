@@ -4,14 +4,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 import vendingmachine.domain.items.Item;
 
 import java.util.TreeMap;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class VendingMachineTest {
@@ -35,6 +32,15 @@ class VendingMachineTest {
     void 구매_가능한_상품() {
         assertThat(vendingMachine.canPurchase(new Item("콜라"))).isTrue();
         assertThat(vendingMachine.canPurchase(new Item("사이다"))).isTrue();
+    }
+
+    @Test
+    void 상품_구매() {
+        vendingMachine.purchase(new Item("콜라"), true);
+        assertThat(vendingMachine.printInputMoney().getInputMoney()).isEqualTo(new Money(1500));
+
+        vendingMachine.purchase(new Item("사이다"), true);
+        assertThat(vendingMachine.printInputMoney().getInputMoney()).isEqualTo(new Money(500));
     }
 
 

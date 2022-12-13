@@ -2,6 +2,8 @@ package vendingmachine.domain;
 
 import vendingmachine.domain.items.ItemPrice;
 
+import java.util.Objects;
+
 
 public class Money implements Comparable<Money>{
     private static final int MIN_UNIT = 10;
@@ -54,6 +56,23 @@ public class Money implements Comparable<Money>{
 
     public boolean isZero() {
         return this.money == 0;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Money target = (Money) o;
+        return money == target.money;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(money);
     }
 
     @Override
