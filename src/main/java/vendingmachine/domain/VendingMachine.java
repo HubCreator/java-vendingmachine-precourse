@@ -30,6 +30,28 @@ public class VendingMachine {
         return new PrintInputMoneyDto(inputMoney);
     }
 
+
+    public PrintChangeDto getChangeMap() {
+        TreeMap<Coin, Integer> result = new TreeMap<>();
+
+        if (change.isLowerOrEqual(inputMoney)) {
+            return new PrintChangeDto(changeMap);
+        }
+        while (!inputMoney.isZero()) {
+            Coin coin = changeMap.firstKey();
+            if (!inputMoney.isLowerOrEqual(coin)) {
+                continue;
+            }
+            changeMap.put(coin, changeMap.get(coin) - 1);
+            result.put(coin, result.getOrDefault(coin, 0) + 1);
+            inputMoney.decrease(coin);
+            if (changeMap.get(coin) == 0) {
+                changeMap.remove(coin);
+            }
+        }
+        return new PrintChangeDto(result);
+    }
+
     public void setItems(String itemsInfo) {
         TreeMap<Item, ItemStock> map = new TreeMap<>();
 
@@ -60,27 +82,5 @@ public class VendingMachine {
         }
         Item purchasedItem = items.purchase(targetItem);
         inputMoney.decrease(purchasedItem.getItemPrice());
-    }
-
-
-    public PrintChangeDto getChangeMap() {
-        TreeMap<Coin, Integer> result = new TreeMap<>();
-
-        if (change.isLowerOrEqual(inputMoney)) {
-            return new PrintChangeDto(changeMap);
-        }
-        while (!inputMoney.isZero()) {
-            Coin coin = changeMap.firstKey();
-            if (!inputMoney.isLowerOrEqual(coin)) {
-                continue;
-            }
-            changeMap.put(coin, changeMap.get(coin) - 1);
-            result.put(coin, result.getOrDefault(coin, 0) + 1);
-            inputMoney.decrease(coin);
-            if (changeMap.get(coin) == 0) {
-                changeMap.remove(coin);
-            }
-        }
-        return new PrintChangeDto(result);
     }
 }

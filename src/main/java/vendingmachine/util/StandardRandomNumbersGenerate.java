@@ -29,7 +29,7 @@ public class StandardRandomNumbersGenerate implements RandomNumbersGenerator {
     }
 
     private Coin getCoin(int amount) {
-        List<Integer> entry = Arrays.stream(Coin.values())
+        List<Integer> entry = Arrays.stream(coins)
                 .map(Coin::getAmount)
                 .filter(m -> m <= amount)
                 .collect(Collectors.toList());

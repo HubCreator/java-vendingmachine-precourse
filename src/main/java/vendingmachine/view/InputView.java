@@ -6,8 +6,6 @@ import vendingmachine.dto.input.ReadItemsInfoDto;
 import vendingmachine.dto.input.ReadChangeDto;
 import vendingmachine.dto.input.ReadMoneyDto;
 
-import java.text.MessageFormat;
-
 public class InputView {
 
     public static final char PREFIX = '[';
