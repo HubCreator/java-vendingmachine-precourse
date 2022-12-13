@@ -38,24 +38,39 @@ public class VendingMachine {
         if (change.isLowerOrEqual(inputMoney)) {
             return new PrintChangeDto(changeMap);
         }
+        getResult(result, tmp);
+        return new PrintChangeDto(result);
+    }
+
+    private void getResult(TreeMap<Coin, Integer> result, TreeMap<Coin, Integer> tmp) {
         while (!inputMoney.isZero()) {
             Coin coin = changeMap.firstKey();
-            if (inputMoney.isLowerThan(coin)) {
-                Map.Entry<Coin, Integer> poll = changeMap.pollFirstEntry();
-                tmp.put(changeMap.pollFirstEntry().getKey(), poll.getValue());
+            if (needToSkip(tmp, coin)) {
                 continue;
             }
-            changeMap.put(coin, changeMap.get(coin) - 1);
-            result.put(coin, result.getOrDefault(coin, 0) + 1);
-            inputMoney.decrease(coin);
-            if (changeMap.get(coin) == 0) {
-                changeMap.remove(coin);
-            }
-            if (!tmp.isEmpty()) {
-                result.putAll(tmp);
-            }
+            getResult(result, tmp, coin);
         }
-        return new PrintChangeDto(result);
+    }
+
+    private void getResult(TreeMap<Coin, Integer> result, TreeMap<Coin, Integer> tmp, Coin coin) {
+        changeMap.put(coin, changeMap.get(coin) - 1);
+        result.put(coin, result.getOrDefault(coin, 0) + 1);
+        inputMoney.decrease(coin);
+        if (changeMap.get(coin) == 0) {
+            changeMap.remove(coin);
+        }
+        if (!tmp.isEmpty()) {
+            result.putAll(tmp);
+        }
+    }
+
+    private boolean needToSkip(TreeMap<Coin, Integer> tmp, Coin coin) {
+        if (inputMoney.isLowerThan(coin)) {
+            Map.Entry<Coin, Integer> poll = changeMap.pollFirstEntry();
+            tmp.put(changeMap.pollFirstEntry().getKey(), poll.getValue());
+            return true;
+        }
+        return false;
     }
 
     public void setItems(String itemsInfo) {

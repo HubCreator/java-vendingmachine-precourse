@@ -23,7 +23,7 @@ public class StandardRandomNumbersGenerate implements RandomNumbersGenerator {
             Coin coin = getCoin(amount);
             result.put(coin, result.getOrDefault(coin, 0) + 1);
             amount -= coin.getAmount();
-        } while (amount >= 0);
+        } while (amount > 0);
 
         return result;
     }
@@ -33,6 +33,7 @@ public class StandardRandomNumbersGenerate implements RandomNumbersGenerator {
                 .map(Coin::getAmount)
                 .filter(m -> m <= amount)
                 .collect(Collectors.toList());
-        return Coin.map(Randoms.pickNumberInList(entry));
+        int coin = Randoms.pickNumberInList(entry);
+        return Coin.map(coin);
     }
 }

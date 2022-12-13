@@ -37,7 +37,7 @@ public class OutputView {
 
     public void printInputMoney(PrintInputMoneyDto dto) {
         Money inputMoney = dto.getInputMoney();
-        System.out.println(String.format("\n투입금액 : %d원", inputMoney.getMoney()));
+        System.out.println(String.format("\n투입 금액: %d원", inputMoney.getMoney()));
     }
 
     public void printChange(PrintChangeDto dto) {
