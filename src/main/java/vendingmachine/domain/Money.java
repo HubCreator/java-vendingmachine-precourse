@@ -50,9 +50,6 @@ public class Money implements Comparable<Money>{
         return this.money <= inputMoney.money;
     }
 
-    public boolean isLowerOrEqual(Coin coin) {
-        return this.money <= coin.getAmount();
-    }
 
     public boolean isLowerThan(Coin coin) {
         return this.money < coin.getAmount();

@@ -13,6 +13,9 @@ import java.util.TreeMap;
 
 public class VendingMachine {
 
+    public static final String ITEMS_DELIMITER = ";";
+    public static final String ITEM_INFOS_DELIMITER = ",";
+
     private final Money change;
     private final TreeMap<Coin, Integer> changeMap;
     private Items items;
@@ -76,10 +79,10 @@ public class VendingMachine {
     public void setItems(String itemsInfo) {
         TreeMap<Item, ItemStock> map = new TreeMap<>();
 
-        String[] items = itemsInfo.split(";");
+        String[] items = itemsInfo.split(ITEMS_DELIMITER);
         for (String item : items) {
             item = item.substring(1, item.length() - 1);
-            String[] infos = item.split(",");
+            String[] infos = item.split(ITEM_INFOS_DELIMITER);
             map.put(new Item(infos[0], infos[1]), new ItemStock(infos[2]));
         }
         this.items = new Items(map);

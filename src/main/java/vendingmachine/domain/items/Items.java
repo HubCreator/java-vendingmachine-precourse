@@ -18,7 +18,7 @@ public class Items {
 
     public boolean canPurchase(Item item, Money inputMoney) {
         if (!itemMap.containsKey(item)) {
-            throw new IllegalArgumentException("해당 상품이 없습니다.");
+            throw new IllegalArgumentException(ErrorMessage.ITEM_NOT_FOUNT.message);
         }
         return itemMap.get(item).hasStock() && itemMap.floorKey(item).getItemPrice().isLowerOrEqual(inputMoney);
     }
@@ -26,5 +26,16 @@ public class Items {
     public Item purchase(Item item) {
         itemMap.get(item).decrease();
         return itemMap.floorKey(item);
+    }
+
+    private enum ErrorMessage {
+        ITEM_NOT_FOUNT("해당 상품이 없습니다.");
+
+        private static final String errorHead = "[ERROR] ";
+        private final String message;
+
+        ErrorMessage(String message) {
+            this.message = errorHead + message;
+        }
     }
 }
