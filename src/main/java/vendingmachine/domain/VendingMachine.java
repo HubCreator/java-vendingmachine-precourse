@@ -1,19 +1,14 @@
 package vendingmachine.domain;
 
-import camp.nextstep.edu.missionutils.Randoms;
 import vendingmachine.domain.items.Item;
 import vendingmachine.domain.items.ItemStock;
 import vendingmachine.domain.items.Items;
 import vendingmachine.dto.output.PrintChangeDto;
 import vendingmachine.dto.output.PrintInputMoneyDto;
 import vendingmachine.dto.output.PrintVendingMachineCoinDto;
+import vendingmachine.util.RandomNumbersGenerator;
 
-import java.util.Arrays;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
 import java.util.TreeMap;
-import java.util.stream.Collectors;
 
 public class VendingMachine {
 
@@ -22,28 +17,9 @@ public class VendingMachine {
     private Items items;
     private Money inputMoney;
 
-    public VendingMachine(int change) {
+    public VendingMachine(int change, RandomNumbersGenerator generator) {
         this.change = new Money(change);
-        this.changeMap = initChangeMap(change);
-    }
-
-    private TreeMap<Coin, Integer> initChangeMap(int amount) {
-        TreeMap<Coin, Integer> result = new TreeMap<>();
-        do {
-            Coin randomCoin = getRandomCoinWithLimit(amount);
-            result.put(randomCoin, result.getOrDefault(randomCoin, 0) + 1);
-            amount -= randomCoin.getAmount();
-        } while (amount > 0);
-        return result;
-    }
-
-    private Coin getRandomCoinWithLimit(int amount) {
-        List<Integer> entry = Arrays.stream(Coin.values())
-                .map(Coin::getAmount)
-                .filter(m -> m <= amount)
-                .collect(Collectors.toList());
-
-        return Coin.map(Randoms.pickNumberInList(entry));
+        this.changeMap = generator.generate(change);
     }
 
     public PrintVendingMachineCoinDto printCoinStatus() {

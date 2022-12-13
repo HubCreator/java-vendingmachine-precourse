@@ -1,5 +1,6 @@
 package vendingmachine.controller;
 
+import vendingmachine.domain.Coin;
 import vendingmachine.domain.Status;
 import vendingmachine.domain.VendingMachine;
 import vendingmachine.domain.items.Item;
@@ -8,6 +9,8 @@ import vendingmachine.dto.input.ReadItemNameDto;
 import vendingmachine.dto.input.ReadItemsInfoDto;
 import vendingmachine.dto.input.ReadMoneyDto;
 import vendingmachine.dto.output.PrintExceptionDto;
+import vendingmachine.util.RandomNumbersGenerator;
+import vendingmachine.util.StandardRandomNumbersGenerate;
 import vendingmachine.view.IOViewResolver;
 
 import java.util.EnumMap;
@@ -46,7 +49,8 @@ public class Controller {
 
     private Status inputChange() {
         ReadChangeDto readChangeDto = ioViewResolver.inputViewResolve(ReadChangeDto.class);
-        vendingMachine = new VendingMachine(readChangeDto.getVendingMachineCoin());
+        RandomNumbersGenerator generator = new StandardRandomNumbersGenerate(Coin.values());
+        vendingMachine = new VendingMachine(readChangeDto.getVendingMachineCoin(), generator);
         ioViewResolver.outputViewResolve(vendingMachine.printCoinStatus());
         return Status.INPUT_ITEMS_INFO;
     }
