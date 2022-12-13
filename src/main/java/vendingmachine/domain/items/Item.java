@@ -16,6 +16,10 @@ public class Item implements Comparable<Item> {
         this.itemPrice = new ItemPrice();
     }
 
+    public ItemPrice getItemPrice() {
+        return itemPrice;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -33,16 +37,8 @@ public class Item implements Comparable<Item> {
         return Objects.hashCode(itemName);
     }
 
-    /*@Override
-    public int compareTo(Item o) {
-        return Objects.compare(this.itemPrice, o.itemPrice, Money::compareTo);
-    }*/
     @Override
     public int compareTo(Item o) {
         return String.CASE_INSENSITIVE_ORDER.compare(this.itemName, o.itemName);
-    }
-
-    public ItemPrice getItemPrice() {
-        return itemPrice;
     }
 }

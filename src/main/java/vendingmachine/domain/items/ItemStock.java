@@ -7,20 +7,20 @@ public class ItemStock {
         this.stock = validateDigit(stock);
     }
 
-    private int validateDigit(String price) {
-        try {
-            return Integer.parseInt(price);
-        } catch (NumberFormatException exception) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_TYPE.message, exception);
-        }
-    }
-
     public void decrease() {
         this.stock--;
     }
 
     public boolean hasStock() {
         return stock > 0;
+    }
+
+    private int validateDigit(String price) {
+        try {
+            return Integer.parseInt(price);
+        } catch (NumberFormatException exception) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_TYPE.message, exception);
+        }
     }
 
     private enum ErrorMessage {
