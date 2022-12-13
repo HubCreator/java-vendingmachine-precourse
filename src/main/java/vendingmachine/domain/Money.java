@@ -45,6 +45,10 @@ public class Money implements Comparable<Money>{
         return money - o.money;
     }
 
+    public boolean isLowerOrEqualPrice(Money inputMoney) {
+        return this.money <= inputMoney.money;
+    }
+
 
     private enum ErrorMessage {
         INVALID_UNIT("%d 단위로 입력하셔야 합니다.", MIN_UNIT),

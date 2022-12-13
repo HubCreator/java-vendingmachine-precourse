@@ -1,8 +1,8 @@
 package vendingmachine.domain;
 
 import camp.nextstep.edu.missionutils.Randoms;
-import vendingmachine.domain.items.ItemName;
-import vendingmachine.domain.items.ItemInfo;
+import vendingmachine.domain.items.Item;
+import vendingmachine.domain.items.ItemStock;
 import vendingmachine.domain.items.Items;
 import vendingmachine.dto.output.PrintInputMoneyDto;
 import vendingmachine.dto.output.PrintVendingMachineCoinDto;
@@ -23,10 +23,10 @@ public class VendingMachine {
 
     public VendingMachine(int change) {
         this.change = new Money(change);
-        this.changeMap = getChangeMap(change);
+        this.changeMap = initChangeMap(change);
     }
 
-    private Map<Coin, Integer> getChangeMap(int amount) {
+    private Map<Coin, Integer> initChangeMap(int amount) {
         Map<Coin, Integer> result = new EnumMap<>(Coin.class);
         do {
             Coin randomCoin = getRandomCoinWithLimit(amount);
@@ -54,13 +54,13 @@ public class VendingMachine {
     }
 
     public void setItems(String itemsInfo) {
-        TreeMap<ItemName, ItemInfo> map = new TreeMap<>();
+        TreeMap<Item, ItemStock> map = new TreeMap<>();
 
         String[] items = itemsInfo.split(";");
         for (String item : items) {
             item = item.substring(1, item.length() - 1);
             String[] infos = item.split(",");
-            map.put(new ItemName(infos[0]), new ItemInfo(infos[1], infos[2]));
+            map.put(new Item(infos[0], infos[1]), new ItemStock(infos[2]));
         }
         this.items = new Items(map);
     }
@@ -69,22 +69,19 @@ public class VendingMachine {
         this.inputMoney = new Money(amount);
     }
 
-    public boolean haveEnoughMoney(ItemName itemName) {
-        if (!items.canBuySomething(itemName, inputMoney)) {
-            return false;
-        }
-        return true;
+    public boolean haveEnoughMoney() {
+        return items.haveEnoughMoney(inputMoney);
     }
 
-    public boolean canPurchase(ItemName itemName) {
-        return items.canPurchase(itemName, inputMoney);
+    public boolean canPurchase(Item item) {
+        return items.canPurchase(item, inputMoney);
     }
 
-    public void purchase(ItemName targetItemName, boolean canPurchase) {
+    public void purchase(Item targetItem, boolean canPurchase) {
         if (!canPurchase) {
             return;
         }
-        ItemInfo purchasedItemInfo = items.purchase(targetItemName);
-        inputMoney.decrease(purchasedItemInfo.getPrice());
+        Item purchasedItem = items.purchase(targetItem);
+        inputMoney.decrease(purchasedItem.getItemPrice());
     }
 }

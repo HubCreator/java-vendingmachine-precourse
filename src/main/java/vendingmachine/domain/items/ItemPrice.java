@@ -21,10 +21,6 @@ public class ItemPrice extends Money {
         }
     }
 
-    public boolean isLowerOrEqualThan(Money target) {
-        return money <= target.getMoney();
-    }
-
     private enum ErrorMessage {
         INVALID_PRICE("상품의 가격으로는 %d원 이상을 입력해야 합니다.", MIN_PRICE);
 

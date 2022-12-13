@@ -3,10 +3,6 @@ package vendingmachine.domain.items;
 public class ItemStock {
     private int stock;
 
-    public ItemStock() {
-        this.stock = 0;
-    }
-
     public ItemStock(String stock) {
         this.stock = validateDigit(stock);
     }
