@@ -7,7 +7,7 @@ import vendingmachine.dto.input.ReadChangeDto;
 import vendingmachine.dto.input.ReadItemNameDto;
 import vendingmachine.dto.input.ReadItemsInfoDto;
 import vendingmachine.dto.input.ReadMoneyDto;
-import vendingmachine.dto.output.PrintChangeDto;
+import vendingmachine.dto.output.PrintExceptionDto;
 import vendingmachine.view.IOViewResolver;
 
 import java.util.EnumMap;
@@ -39,7 +39,7 @@ public class Controller {
         try {
             return statusMap.get(status).get();
         } catch (IllegalArgumentException exception) {
-            System.out.println(exception.getMessage());
+            ioViewResolver.outputViewResolve(new PrintExceptionDto(exception));
             return status;
         }
     }

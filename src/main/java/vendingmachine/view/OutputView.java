@@ -3,6 +3,7 @@ package vendingmachine.view;
 import vendingmachine.domain.Coin;
 import vendingmachine.domain.Money;
 import vendingmachine.dto.output.PrintChangeDto;
+import vendingmachine.dto.output.PrintExceptionDto;
 import vendingmachine.dto.output.PrintInputMoneyDto;
 import vendingmachine.dto.output.PrintVendingMachineCoinDto;
 
@@ -46,5 +47,9 @@ public class OutputView {
             result.append(String.format("%d원 - %d개\n", entry.getKey().getAmount(), entry.getValue()));
         }
         System.out.println(result);
+    }
+
+    public void printException(PrintExceptionDto dto) {
+        System.out.println(dto.getException().getMessage());
     }
 }
