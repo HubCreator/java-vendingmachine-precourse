@@ -40,11 +40,15 @@ public class Item implements Comparable<Item> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(itemName);
+        return Objects.hashCode(itemName);
     }
 
-    @Override
+    /*@Override
     public int compareTo(Item o) {
         return Objects.compare(this.itemPrice, o.itemPrice, Money::compareTo);
+    }*/
+    @Override
+    public int compareTo(Item o) {
+        return String.CASE_INSENSITIVE_ORDER.compare(this.itemName, o.itemName);
     }
 }

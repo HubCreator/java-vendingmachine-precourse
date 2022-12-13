@@ -69,13 +69,23 @@ public class VendingMachine {
         this.inputMoney = new Money(amount);
     }
 
-    public boolean purchase(Item item) {
-        boolean purchasable = items.canPurchase(item, inputMoney);
-        if (!purchasable) {
+    public boolean haveEnoughMoney(Item item) {
+        if (!items.canBuySomething(item, inputMoney)) {
             return false;
         }
-        items.purchase(item);
-        inputMoney.decrease(item.getItemPrice());
+        return true;
+    }
+
+    public boolean canPurchase(Item item) {
+        return items.canPurchase(item, inputMoney);
+    }
+
+    public boolean purchase(Item targetItem, boolean canPurchase) {
+        if (!canPurchase) {
+            return false;
+        }
+        items.purchase(targetItem);
+        inputMoney.decrease(targetItem.getItemPrice());
         return true;
     }
 }

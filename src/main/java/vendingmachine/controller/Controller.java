@@ -64,7 +64,13 @@ public class Controller {
     private Status inputItemName() {
         ioViewResolver.outputViewResolve(vendingMachine.printInputMoney());
         ReadItemNameDto readItemNameDto = ioViewResolver.inputViewResolve(ReadItemNameDto.class);
-        boolean purchase = vendingMachine.purchase(new Item(readItemNameDto.getItemName()));
-        return Status.INPUT_ITEM_NAME;
+        Item targetItem = new Item(readItemNameDto.getItemName());
+        boolean haveEnoughMoney = vendingMachine.haveEnoughMoney(targetItem);
+        if (haveEnoughMoney) {
+            boolean canPurchase = vendingMachine.canPurchase(targetItem); // 재고와 해당 상품을 살 수 있는지 확인
+            vendingMachine.purchase(targetItem, canPurchase);
+            return Status.INPUT_ITEM_NAME;
+        }
+        return Status.EXIT;
     }
 }
