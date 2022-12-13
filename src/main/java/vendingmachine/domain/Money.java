@@ -64,7 +64,7 @@ public class Money implements Comparable<Money>{
 
     private enum ErrorMessage {
         INVALID_UNIT("%d 단위로 입력하셔야 합니다.", MIN_UNIT),
-        INVALID_TYPE("금액은 숫자로 입력하셔야 합니다.");
+        INVALID_TYPE("금액과 수량은 숫자로 입력하셔야 합니다.");
 
         private static final String errorHead = "[ERROR] ";
         private final String message;

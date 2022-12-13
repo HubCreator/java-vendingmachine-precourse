@@ -7,7 +7,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class ItemTest {
@@ -25,7 +27,7 @@ class ItemTest {
         void 문자열_입력(String value) {
             assertThatThrownBy(() -> new Item("콜라", value))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("[ERROR] 금액은 숫자로 입력하셔야 합니다.");
+                    .hasMessage("[ERROR] 금액과 수량은 숫자로 입력하셔야 합니다.");
         }
 
         @ParameterizedTest

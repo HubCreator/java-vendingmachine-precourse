@@ -24,7 +24,7 @@ public class ItemStock {
     }
 
     private enum ErrorMessage {
-        INVALID_TYPE("상품의 가격은 숫자로 입력해야 합니다.");
+        INVALID_TYPE("금액과 수량은 숫자로 입력하셔야 합니다.");
 
         private static final String errorHead = "[ERROR] ";
         private final String message;

@@ -20,7 +20,7 @@ class MoneyTest {
         void 문자열_입력(String value) {
             assertThatThrownBy(() -> new Money(value))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("[ERROR] 금액은 숫자로 입력하셔야 합니다.");
+                    .hasMessage("[ERROR] 금액과 수량은 숫자로 입력하셔야 합니다.");
         }
 
         @ParameterizedTest
