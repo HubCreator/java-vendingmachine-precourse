@@ -21,8 +21,8 @@ public class Item {
         this.itemStock = new ItemStock();
     }
 
-    public boolean isLowerPrice(Money money) {
-        return itemPrice.isLowerThan(money);
+    public boolean isLowerOrEqualPrice(Money money) {
+        return itemPrice.isLowerOrEqualThan(money);
     }
 
     public boolean hasStock() {

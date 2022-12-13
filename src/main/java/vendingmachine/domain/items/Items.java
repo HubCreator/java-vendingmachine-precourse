@@ -13,7 +13,7 @@ public class Items {
 
     public Item canPurchase(Item item, Money inputMoney) {
         return items.stream()
-                .filter(m -> m.equals(item) && m.hasStock() && m.isLowerPrice(inputMoney))
+                .filter(m -> m.equals(item) && m.hasStock() && m.isLowerOrEqualPrice(inputMoney))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("해당 상품이 없습니다."));
     }
