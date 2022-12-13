@@ -40,13 +40,25 @@ public class Money implements Comparable<Money>{
         this.money -= itemPrice.money;
     }
 
+    public void decrease(Coin coin) {
+        this.money -= coin.getAmount();
+    }
+
+    public boolean isLowerOrEqual(Money inputMoney) {
+        return this.money <= inputMoney.money;
+    }
+
+    public boolean isLowerOrEqual(Coin coin) {
+        return this.money <= coin.getAmount();
+    }
+
+    public boolean isZero() {
+        return this.money == 0;
+    }
+
     @Override
     public int compareTo(Money o) {
         return money - o.money;
-    }
-
-    public boolean isLowerOrEqualPrice(Money inputMoney) {
-        return this.money <= inputMoney.money;
     }
 
 

@@ -13,14 +13,14 @@ public class Items {
 
     public boolean haveEnoughMoney(Money inputMoney) {
         ItemPrice itemPrice = itemMap.firstKey().getItemPrice();
-        return itemPrice.isLowerOrEqualPrice(inputMoney);
+        return itemPrice.isLowerOrEqual(inputMoney);
     }
 
     public boolean canPurchase(Item item, Money inputMoney) {
         if (!itemMap.containsKey(item)) {
             throw new IllegalArgumentException("해당 상품이 없습니다.");
         }
-        return itemMap.get(item).hasStock() && itemMap.floorKey(item).getItemPrice().isLowerOrEqualPrice(inputMoney);
+        return itemMap.get(item).hasStock() && itemMap.floorKey(item).getItemPrice().isLowerOrEqual(inputMoney);
     }
 
     public Item purchase(Item item) {

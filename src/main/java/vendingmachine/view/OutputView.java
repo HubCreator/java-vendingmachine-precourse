@@ -2,10 +2,12 @@ package vendingmachine.view;
 
 import vendingmachine.domain.Coin;
 import vendingmachine.domain.Money;
+import vendingmachine.dto.output.PrintChangeDto;
 import vendingmachine.dto.output.PrintInputMoneyDto;
 import vendingmachine.dto.output.PrintVendingMachineCoinDto;
 
 import java.util.Map;
+import java.util.TreeMap;
 
 public class OutputView {
     private OutputView() {
@@ -35,5 +37,14 @@ public class OutputView {
     public void printInputMoney(PrintInputMoneyDto dto) {
         Money inputMoney = dto.getInputMoney();
         System.out.println(String.format("\n투입금액 : %d원", inputMoney.getMoney()));
+    }
+
+    public void printChange(PrintChangeDto dto) {
+        TreeMap<Coin, Integer> changeMap = dto.getChangeMap();
+        StringBuilder result = new StringBuilder("잔돈\n");
+        for (Map.Entry<Coin, Integer> entry : changeMap.entrySet()) {
+            result.append(String.format("%d원 - %d개\n", entry.getKey().getAmount(), entry.getValue()));
+        }
+        System.out.println(result);
     }
 }

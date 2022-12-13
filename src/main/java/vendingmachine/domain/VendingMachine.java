@@ -4,6 +4,7 @@ import camp.nextstep.edu.missionutils.Randoms;
 import vendingmachine.domain.items.Item;
 import vendingmachine.domain.items.ItemStock;
 import vendingmachine.domain.items.Items;
+import vendingmachine.dto.output.PrintChangeDto;
 import vendingmachine.dto.output.PrintInputMoneyDto;
 import vendingmachine.dto.output.PrintVendingMachineCoinDto;
 
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
 public class VendingMachine {
 
     private final Money change;
-    private final Map<Coin, Integer> changeMap;
+    private final TreeMap<Coin, Integer> changeMap;
     private Items items;
     private Money inputMoney;
 
@@ -26,8 +27,8 @@ public class VendingMachine {
         this.changeMap = initChangeMap(change);
     }
 
-    private Map<Coin, Integer> initChangeMap(int amount) {
-        Map<Coin, Integer> result = new EnumMap<>(Coin.class);
+    private TreeMap<Coin, Integer> initChangeMap(int amount) {
+        TreeMap<Coin, Integer> result = new TreeMap<>();
         do {
             Coin randomCoin = getRandomCoinWithLimit(amount);
             result.put(randomCoin, result.getOrDefault(randomCoin, 0) + 1);
@@ -83,5 +84,27 @@ public class VendingMachine {
         }
         Item purchasedItem = items.purchase(targetItem);
         inputMoney.decrease(purchasedItem.getItemPrice());
+    }
+
+
+    public PrintChangeDto getChangeMap() {
+        TreeMap<Coin, Integer> result = new TreeMap<>();
+
+        if (change.isLowerOrEqual(inputMoney)) {
+            return new PrintChangeDto(changeMap);
+        }
+        while (!inputMoney.isZero()) {
+            Coin coin = changeMap.firstKey();
+            if (!inputMoney.isLowerOrEqual(coin)) {
+                continue;
+            }
+            changeMap.put(coin, changeMap.get(coin) - 1);
+            result.put(coin, result.getOrDefault(coin, 0) + 1);
+            inputMoney.decrease(coin);
+            if (changeMap.get(coin) == 0) {
+                changeMap.remove(coin);
+            }
+        }
+        return new PrintChangeDto(result);
     }
 }
