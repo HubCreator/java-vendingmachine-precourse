@@ -24,14 +24,24 @@ class ItemTest {
         @ValueSource(strings = {"", " ", "!!"})
         void 문자열_입력(String value) {
             assertThatThrownBy(() -> new Item("콜라", value))
-                    .isInstanceOf(IllegalArgumentException.class);
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("[ERROR] 금액은 숫자로 입력하셔야 합니다.");
         }
 
         @ParameterizedTest
-        @ValueSource(strings = {"10", "90", "101", "301"})
-        void 올바르지_않은_입력_범위(String value) {
+        @ValueSource(strings = {"1", "9", "111", "123"})
+        void _10원_단위가_아닌_입력(String value) {
             assertThatThrownBy(() -> new Item("콜라", value))
-                    .isInstanceOf(IllegalArgumentException.class);
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("[ERROR] 10 단위로 입력하셔야 합니다.");
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = {"10", "90", "0"})
+        void _100원_이하의_입력(String value) {
+            assertThatThrownBy(() -> new Item("콜라", value))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("[ERROR] 상품의 가격으로는 100원 이상을 입력해야 합니다.");
         }
     }
 
