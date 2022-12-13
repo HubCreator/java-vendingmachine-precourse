@@ -2,19 +2,29 @@ package vendingmachine.domain.items;
 
 import vendingmachine.domain.Money;
 
-import java.util.List;
+import java.util.TreeMap;
 
 public class Items {
-    private final List<Item> items;
+    private final TreeMap<Item, Integer> itemMap;
 
-    public Items(List<Item> items) {
-        this.items = items;
+    public Items(TreeMap<Item, Integer> itemMap) {
+        this.itemMap = itemMap;
     }
 
-    public Item canPurchase(Item item, Money inputMoney) {
-        return items.stream()
-                .filter(m -> m.equals(item) && m.hasStock() && m.isLowerOrEqualPrice(inputMoney))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("해당 상품이 없습니다."));
+    public boolean canPurchase(Item item, Money inputMoney) {
+        if (!itemMap.containsKey(item)) {
+            throw new IllegalArgumentException("해당 상품이 없습니다.");
+        }
+        if (itemMap.firstKey().isLowerOrEqualPrice(inputMoney)) {
+            return false;
+        }
+        return true;
+    }
+
+    public void purchase(Item item) {
+        itemMap.put(item, itemMap.get(item) - 1);
+        if (itemMap.get(item) == 0) {
+            itemMap.remove(item);
+        }
     }
 }

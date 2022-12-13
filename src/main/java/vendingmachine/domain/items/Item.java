@@ -4,33 +4,22 @@ import vendingmachine.domain.Money;
 
 import java.util.Objects;
 
-public class Item {
+public class Item implements Comparable<Item> {
     private final String itemName;
     private final ItemPrice itemPrice;
-    private final ItemStock itemStock;
 
-    public Item(String itemName, String price, String stock) {
+    public Item(String itemName, String price) {
         this.itemName = itemName;
         this.itemPrice = new ItemPrice(price);
-        this.itemStock = new ItemStock(stock);
     }
 
     public Item(String itemName) {
         this.itemName = itemName;
         this.itemPrice = new ItemPrice();
-        this.itemStock = new ItemStock();
     }
 
     public boolean isLowerOrEqualPrice(Money money) {
         return itemPrice.isLowerOrEqualThan(money);
-    }
-
-    public boolean hasStock() {
-        return itemStock.hasStock();
-    }
-
-    public void purchase() {
-        itemStock.decrease();
     }
 
     public ItemPrice getItemPrice() {
@@ -52,5 +41,10 @@ public class Item {
     @Override
     public int hashCode() {
         return Objects.hash(itemName);
+    }
+
+    @Override
+    public int compareTo(Item o) {
+        return Objects.compare(this.itemPrice, o.itemPrice, Money::compareTo);
     }
 }

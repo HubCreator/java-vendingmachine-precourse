@@ -6,11 +6,11 @@ import vendingmachine.domain.items.Items;
 import vendingmachine.dto.output.PrintInputMoneyDto;
 import vendingmachine.dto.output.PrintVendingMachineCoinDto;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 public class VendingMachine {
@@ -53,23 +53,29 @@ public class VendingMachine {
     }
 
     public void setItems(String itemsInfo) {
-        List<Item> result = new ArrayList<>();
+        TreeMap<Item, Integer> map = new TreeMap<>();
+
         String[] items = itemsInfo.split(";");
         for (String item : items) {
             item = item.substring(1, item.length() - 1);
             String[] infos = item.split(",");
-            result.add(new Item(infos[0], infos[1], infos[2]));
+            Item key = new Item(infos[0], infos[1]);
+            map.put(key, map.getOrDefault(key, 0) + Integer.parseInt(infos[2]));
         }
-        this.items = new Items(result);
+        this.items = new Items(map);
     }
 
     public void setMoney(int amount) {
         this.inputMoney = new Money(amount);
     }
 
-    public void purchase(Item item) {
-        Item result = items.canPurchase(item, inputMoney);
-        result.purchase();
-        inputMoney.decrease(result.getItemPrice());
+    public boolean purchase(Item item) {
+        boolean purchasable = items.canPurchase(item, inputMoney);
+        if (!purchasable) {
+            return false;
+        }
+        items.purchase(item);
+        inputMoney.decrease(item.getItemPrice());
+        return true;
     }
 }

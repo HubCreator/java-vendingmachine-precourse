@@ -35,5 +35,4 @@ public class ItemPrice extends Money {
             this.message = errorHead + String.format(message, replaces);
         }
     }
-
 }

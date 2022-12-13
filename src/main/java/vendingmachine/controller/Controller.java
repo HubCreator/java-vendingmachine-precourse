@@ -64,7 +64,7 @@ public class Controller {
     private Status inputItemName() {
         ioViewResolver.outputViewResolve(vendingMachine.printInputMoney());
         ReadItemNameDto readItemNameDto = ioViewResolver.inputViewResolve(ReadItemNameDto.class);
-        vendingMachine.purchase(new Item(readItemNameDto.getItemName()));
+        boolean purchase = vendingMachine.purchase(new Item(readItemNameDto.getItemName()));
         return Status.INPUT_ITEM_NAME;
     }
 }

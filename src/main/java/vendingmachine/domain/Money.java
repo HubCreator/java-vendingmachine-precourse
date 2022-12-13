@@ -2,7 +2,8 @@ package vendingmachine.domain;
 
 import vendingmachine.domain.items.ItemPrice;
 
-public class Money {
+
+public class Money implements Comparable<Money>{
     private static final int MIN_UNIT = 10;
 
     protected int money;
@@ -35,13 +36,15 @@ public class Money {
         return money;
     }
 
-  /*  public boolean isLowerThan(Money target) {
-        return money < target.money;
-    }*/
-
     public void decrease(ItemPrice itemPrice) {
         this.money -= itemPrice.money;
     }
+
+    @Override
+    public int compareTo(Money o) {
+        return money - o.money;
+    }
+
 
     private enum ErrorMessage {
         INVALID_UNIT("%d 단위로 입력하셔야 합니다.", MIN_UNIT),
