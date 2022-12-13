@@ -1,29 +1,12 @@
 package vendingmachine.domain.items;
 
-import vendingmachine.domain.Money;
-
 import java.util.Objects;
 
-public class Item implements Comparable<Item> {
+public class ItemName implements Comparable<ItemName> {
     private final String itemName;
-    private final ItemPrice itemPrice;
 
-    public Item(String itemName, String price) {
+    public ItemName(String itemName) {
         this.itemName = itemName;
-        this.itemPrice = new ItemPrice(price);
-    }
-
-    public Item(String itemName) {
-        this.itemName = itemName;
-        this.itemPrice = new ItemPrice();
-    }
-
-    public boolean isLowerOrEqualPrice(Money money) {
-        return itemPrice.isLowerOrEqualThan(money);
-    }
-
-    public ItemPrice getItemPrice() {
-        return itemPrice;
     }
 
     @Override
@@ -34,8 +17,8 @@ public class Item implements Comparable<Item> {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Item item = (Item) o;
-        return Objects.equals(itemName, item.itemName);
+        ItemName itemName = (ItemName) o;
+        return Objects.equals(this.itemName, itemName.itemName);
     }
 
     @Override
@@ -48,7 +31,7 @@ public class Item implements Comparable<Item> {
         return Objects.compare(this.itemPrice, o.itemPrice, Money::compareTo);
     }*/
     @Override
-    public int compareTo(Item o) {
+    public int compareTo(ItemName o) {
         return String.CASE_INSENSITIVE_ORDER.compare(this.itemName, o.itemName);
     }
 }

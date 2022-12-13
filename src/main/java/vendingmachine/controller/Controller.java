@@ -2,7 +2,7 @@ package vendingmachine.controller;
 
 import vendingmachine.domain.Status;
 import vendingmachine.domain.VendingMachine;
-import vendingmachine.domain.items.Item;
+import vendingmachine.domain.items.ItemName;
 import vendingmachine.dto.input.ReadChangeDto;
 import vendingmachine.dto.input.ReadItemNameDto;
 import vendingmachine.dto.input.ReadItemsInfoDto;
@@ -64,11 +64,11 @@ public class Controller {
     private Status inputItemName() {
         ioViewResolver.outputViewResolve(vendingMachine.printInputMoney());
         ReadItemNameDto readItemNameDto = ioViewResolver.inputViewResolve(ReadItemNameDto.class);
-        Item targetItem = new Item(readItemNameDto.getItemName());
-        boolean haveEnoughMoney = vendingMachine.haveEnoughMoney(targetItem);
+        ItemName targetItemName = new ItemName(readItemNameDto.getItemName());
+        boolean haveEnoughMoney = vendingMachine.haveEnoughMoney(targetItemName);
         if (haveEnoughMoney) {
-            boolean canPurchase = vendingMachine.canPurchase(targetItem); // 재고와 해당 상품을 살 수 있는지 확인
-            vendingMachine.purchase(targetItem, canPurchase);
+            boolean canPurchase = vendingMachine.canPurchase(targetItemName); // 재고와 해당 상품을 살 수 있는지 확인
+            vendingMachine.purchase(targetItemName, canPurchase);
             return Status.INPUT_ITEM_NAME;
         }
         return Status.EXIT;

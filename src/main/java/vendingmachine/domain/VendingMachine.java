@@ -1,7 +1,8 @@
 package vendingmachine.domain;
 
 import camp.nextstep.edu.missionutils.Randoms;
-import vendingmachine.domain.items.Item;
+import vendingmachine.domain.items.ItemName;
+import vendingmachine.domain.items.ItemInfo;
 import vendingmachine.domain.items.Items;
 import vendingmachine.dto.output.PrintInputMoneyDto;
 import vendingmachine.dto.output.PrintVendingMachineCoinDto;
@@ -53,14 +54,13 @@ public class VendingMachine {
     }
 
     public void setItems(String itemsInfo) {
-        TreeMap<Item, Integer> map = new TreeMap<>();
+        TreeMap<ItemName, ItemInfo> map = new TreeMap<>();
 
         String[] items = itemsInfo.split(";");
         for (String item : items) {
             item = item.substring(1, item.length() - 1);
             String[] infos = item.split(",");
-            Item key = new Item(infos[0], infos[1]);
-            map.put(key, map.getOrDefault(key, 0) + Integer.parseInt(infos[2]));
+            map.put(new ItemName(infos[0]), new ItemInfo(infos[1], infos[2]));
         }
         this.items = new Items(map);
     }
@@ -69,23 +69,22 @@ public class VendingMachine {
         this.inputMoney = new Money(amount);
     }
 
-    public boolean haveEnoughMoney(Item item) {
-        if (!items.canBuySomething(item, inputMoney)) {
+    public boolean haveEnoughMoney(ItemName itemName) {
+        if (!items.canBuySomething(itemName, inputMoney)) {
             return false;
         }
         return true;
     }
 
-    public boolean canPurchase(Item item) {
-        return items.canPurchase(item, inputMoney);
+    public boolean canPurchase(ItemName itemName) {
+        return items.canPurchase(itemName, inputMoney);
     }
 
-    public boolean purchase(Item targetItem, boolean canPurchase) {
+    public void purchase(ItemName targetItemName, boolean canPurchase) {
         if (!canPurchase) {
-            return false;
+            return;
         }
-        items.purchase(targetItem);
-        inputMoney.decrease(targetItem.getItemPrice());
-        return true;
+        ItemInfo purchasedItemInfo = items.purchase(targetItemName);
+        inputMoney.decrease(purchasedItemInfo.getPrice());
     }
 }
