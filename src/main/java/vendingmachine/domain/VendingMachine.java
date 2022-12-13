@@ -8,6 +8,7 @@ import vendingmachine.dto.output.PrintInputMoneyDto;
 import vendingmachine.dto.output.PrintVendingMachineCoinDto;
 import vendingmachine.util.RandomNumbersGenerator;
 
+import java.util.Map;
 import java.util.TreeMap;
 
 public class VendingMachine {
@@ -32,13 +33,16 @@ public class VendingMachine {
 
     public PrintChangeDto getChangeMap() {
         TreeMap<Coin, Integer> result = new TreeMap<>();
+        TreeMap<Coin, Integer> tmp = new TreeMap<>();
 
         if (change.isLowerOrEqual(inputMoney)) {
             return new PrintChangeDto(changeMap);
         }
         while (!inputMoney.isZero()) {
             Coin coin = changeMap.firstKey();
-            if (!inputMoney.isLowerOrEqual(coin)) {
+            if (inputMoney.isLowerThan(coin)) {
+                Map.Entry<Coin, Integer> poll = changeMap.pollFirstEntry();
+                tmp.put(changeMap.pollFirstEntry().getKey(), poll.getValue());
                 continue;
             }
             changeMap.put(coin, changeMap.get(coin) - 1);
@@ -46,6 +50,9 @@ public class VendingMachine {
             inputMoney.decrease(coin);
             if (changeMap.get(coin) == 0) {
                 changeMap.remove(coin);
+            }
+            if (!tmp.isEmpty()) {
+                result.putAll(tmp);
             }
         }
         return new PrintChangeDto(result);
