@@ -53,27 +53,15 @@ public final class InputView {
     }
 
     private String validateFormat(String input) {
-        String[] items = validateItemsFormat(input);
-        validateSingleItemFormat(items);
+        validateItemsFormat(input);
 
         return input;
     }
 
-    private String[] validateItemsFormat(String input) {
+    private void validateItemsFormat(String input) {
         String[] items = input.split(ITEMS_DELIMITER);
         for (String item : items) {
-            if (item.charAt(0) != PREFIX || item.charAt(item.length() - 1) != SUFFIX) {
-                throw new IllegalArgumentException(ErrorMessage.INVALID_ITEM_FORMAT.message);
-            }
-        }
-
-        return items;
-    }
-
-    private void validateSingleItemFormat(String[] items) {
-        for (String item : items) {
-            String[] infos = item.split(ITEM_INFOS_DELIMITER);
-            if (infos.length != 3) {
+            if (!item.matches("\\" + PREFIX + ".+,[0-9]+,[0-9]+" + "\\" + SUFFIX)) {
                 throw new IllegalArgumentException(ErrorMessage.INVALID_ITEM_FORMAT.message);
             }
         }
