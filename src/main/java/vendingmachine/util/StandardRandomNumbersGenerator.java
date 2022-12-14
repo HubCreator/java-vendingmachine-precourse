@@ -9,11 +9,6 @@ import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 public class StandardRandomNumbersGenerator implements RandomNumbersGenerator {
-    private final Coin[] coins;
-
-    public StandardRandomNumbersGenerator(Coin[] coins) {
-        this.coins = coins;
-    }
 
     @Override
     public TreeMap<Coin, Integer> generate(int amount) {
@@ -29,7 +24,7 @@ public class StandardRandomNumbersGenerator implements RandomNumbersGenerator {
     }
 
     private Coin getCoin(int amount) {
-        List<Integer> entry = Arrays.stream(coins)
+        List<Integer> entry = Arrays.stream(Coin.values())
                 .map(Coin::getAmount)
                 .filter(m -> m <= amount)
                 .collect(Collectors.toList());

@@ -1,6 +1,5 @@
 package vendingmachine.controller;
 
-import vendingmachine.domain.Coin;
 import vendingmachine.domain.Status;
 import vendingmachine.domain.VendingMachine;
 import vendingmachine.domain.items.Item;
@@ -13,7 +12,6 @@ import vendingmachine.dto.output.PrintExceptionDto;
 import vendingmachine.dto.output.PrintInputMoneyDto;
 import vendingmachine.dto.output.PrintVendingMachineCoinDto;
 import vendingmachine.util.RandomNumbersGenerator;
-import vendingmachine.util.StandardRandomNumbersGenerator;
 import vendingmachine.view.IOViewResolver;
 
 import java.util.EnumMap;
@@ -27,14 +25,14 @@ public class Controller {
 
     private VendingMachine vendingMachine;
 
-    public Controller(IOViewResolver ioViewResolver) {
+    public Controller(IOViewResolver ioViewResolver, RandomNumbersGenerator generator) {
         this.ioViewResolver = ioViewResolver;
         this.statusMap = new EnumMap<>(Status.class);
-        initStatusMap();
+        initStatusMap(generator);
     }
 
-    private void initStatusMap() {
-        statusMap.put(Status.INPUT_CHANGE, this::inputChange);
+    private void initStatusMap(RandomNumbersGenerator generator) {
+        statusMap.put(Status.INPUT_CHANGE, () -> inputChange(generator));
         statusMap.put(Status.INPUT_ITEMS_INFO, this::inputItemsInfo);
         statusMap.put(Status.INPUT_MONEY, this::inputMoney);
         statusMap.put(Status.INPUT_ITEM_NAME, this::inputItemName);
@@ -50,9 +48,9 @@ public class Controller {
         }
     }
 
-    private Status inputChange() {
+    private Status inputChange(RandomNumbersGenerator generator) {
         ReadChangeDto readChangeDto = ioViewResolver.inputViewResolve(ReadChangeDto.class);
-        RandomNumbersGenerator generator = new StandardRandomNumbersGenerator(Coin.values());
+
         vendingMachine = new VendingMachine(readChangeDto.getVendingMachineCoin(), generator);
         ioViewResolver.outputViewResolve(new PrintVendingMachineCoinDto(vendingMachine.printCoinStatus()));
         return Status.INPUT_ITEMS_INFO;
