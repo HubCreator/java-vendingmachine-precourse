@@ -1,9 +1,9 @@
 package vendingmachine.dto.input;
 
-public class ReadItemsInfoDto {
+public final class ReadItemsInfoDto {
     private final String itemsInfo;
 
-    public ReadItemsInfoDto(String itemsInfo) {
+    public ReadItemsInfoDto(final String itemsInfo) {
         this.itemsInfo = itemsInfo;
     }
 

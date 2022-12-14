@@ -1,10 +1,10 @@
 package vendingmachine.dto.input;
 
-public class ReadItemNameDto {
+public final class ReadItemNameDto {
 
     private final String itemName;
 
-    public ReadItemNameDto(String itemName) {
+    public ReadItemNameDto(final String itemName) {
         this.itemName = itemName;
     }
 

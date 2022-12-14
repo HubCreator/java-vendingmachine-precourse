@@ -2,10 +2,10 @@ package vendingmachine.dto.output;
 
 import vendingmachine.domain.Money;
 
-public class PrintInputMoneyDto {
+public final class PrintInputMoneyDto {
     private final Money inputMoney;
 
-    public PrintInputMoneyDto(Money inputMoney) {
+    public PrintInputMoneyDto(final Money inputMoney) {
         this.inputMoney = inputMoney;
     }
 

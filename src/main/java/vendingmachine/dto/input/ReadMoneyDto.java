@@ -1,9 +1,9 @@
 package vendingmachine.dto.input;
 
-public class ReadMoneyDto {
+public final class ReadMoneyDto {
     private final int money;
 
-    public ReadMoneyDto(int money) {
+    public ReadMoneyDto(final int money) {
         this.money = money;
     }
 

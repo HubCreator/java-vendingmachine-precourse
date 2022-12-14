@@ -2,7 +2,7 @@ package vendingmachine.domain.items;
 
 import java.util.Objects;
 
-public class Item implements Comparable<Item> {
+public final class Item implements Comparable<Item> {
     private final String itemName;
     private final ItemPrice itemPrice;
 

@@ -4,11 +4,11 @@ import vendingmachine.domain.Coin;
 
 import java.util.Map;
 
-public class PrintVendingMachineCoinDto {
+public final class PrintVendingMachineCoinDto {
 
     private final Map<Coin, Integer> coinMap;
 
-    public PrintVendingMachineCoinDto(Map<Coin, Integer> coinMap) {
+    public PrintVendingMachineCoinDto(final Map<Coin, Integer> coinMap) {
         this.coinMap = coinMap;
     }
 

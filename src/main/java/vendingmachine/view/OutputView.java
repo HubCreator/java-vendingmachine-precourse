@@ -10,7 +10,7 @@ import vendingmachine.dto.output.PrintVendingMachineCoinDto;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class OutputView {
+public final class OutputView {
     private OutputView() {
     }
 

@@ -18,7 +18,7 @@ import java.util.EnumMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
-public class Controller {
+public final class Controller {
 
     private final IOViewResolver ioViewResolver;
     private final Map<Status, Supplier<Status>> statusMap;

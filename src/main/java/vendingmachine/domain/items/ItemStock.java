@@ -1,6 +1,6 @@
 package vendingmachine.domain.items;
 
-public class ItemStock {
+public final class ItemStock {
     private int stock;
 
     public ItemStock(String stock) {

@@ -6,7 +6,7 @@ import vendingmachine.dto.input.ReadItemsInfoDto;
 import vendingmachine.dto.input.ReadChangeDto;
 import vendingmachine.dto.input.ReadMoneyDto;
 
-public class InputView {
+public final class InputView {
 
     public static final char PREFIX = '[';
     public static final char SUFFIX = ']';

@@ -4,7 +4,7 @@ import vendingmachine.domain.Money;
 
 import java.util.TreeMap;
 
-public class Items {
+public final class Items {
     private final TreeMap<Item, ItemStock> itemMap;
 
     public Items(TreeMap<Item, ItemStock> itemMap) {

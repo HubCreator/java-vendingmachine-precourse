@@ -2,7 +2,7 @@ package vendingmachine.domain.items;
 
 import vendingmachine.domain.Money;
 
-public class ItemPrice extends Money {
+public final class ItemPrice extends Money {
 
     private static final int MIN_PRICE = 100;
 

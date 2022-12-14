@@ -4,10 +4,10 @@ import vendingmachine.domain.Coin;
 
 import java.util.TreeMap;
 
-public class PrintChangeDto {
+public final class PrintChangeDto {
     private final TreeMap<Coin, Integer> changeMap;
 
-    public PrintChangeDto(TreeMap<Coin, Integer> changeMap) {
+    public PrintChangeDto(final TreeMap<Coin, Integer> changeMap) {
         this.changeMap = changeMap;
     }
 

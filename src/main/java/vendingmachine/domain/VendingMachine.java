@@ -8,7 +8,7 @@ import vendingmachine.util.RandomNumbersGenerator;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class VendingMachine {
+public final class VendingMachine {
 
     public static final String ITEMS_DELIMITER = ";";
     public static final String ITEM_INFOS_DELIMITER = ",";
