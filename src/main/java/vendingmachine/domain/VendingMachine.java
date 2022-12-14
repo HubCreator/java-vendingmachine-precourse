@@ -3,9 +3,6 @@ package vendingmachine.domain;
 import vendingmachine.domain.items.Item;
 import vendingmachine.domain.items.ItemStock;
 import vendingmachine.domain.items.Items;
-import vendingmachine.dto.output.PrintChangeDto;
-import vendingmachine.dto.output.PrintInputMoneyDto;
-import vendingmachine.dto.output.PrintVendingMachineCoinDto;
 import vendingmachine.util.RandomNumbersGenerator;
 
 import java.util.Map;
@@ -26,23 +23,23 @@ public class VendingMachine {
         this.changeMap = generator.generate(change);
     }
 
-    public PrintVendingMachineCoinDto printCoinStatus() {
-        return new PrintVendingMachineCoinDto(changeMap);
+    public TreeMap<Coin, Integer> printCoinStatus() {
+        return changeMap;
     }
 
-    public PrintInputMoneyDto printInputMoney() {
-        return new PrintInputMoneyDto(inputMoney);
+    public Money printInputMoney() {
+        return inputMoney;
     }
 
-    public PrintChangeDto getChangeMap() {
+    public TreeMap<Coin, Integer> getChangeMap() {
         TreeMap<Coin, Integer> result = new TreeMap<>();
         TreeMap<Coin, Integer> tmp = new TreeMap<>();
 
         if (change.isLowerOrEqual(inputMoney)) {
-            return new PrintChangeDto(changeMap);
+            return changeMap;
         }
         getResult(result, tmp);
-        return new PrintChangeDto(result);
+        return result;
     }
 
     private void getResult(TreeMap<Coin, Integer> result, TreeMap<Coin, Integer> tmp) {

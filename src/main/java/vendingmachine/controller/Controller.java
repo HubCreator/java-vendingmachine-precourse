@@ -8,7 +8,10 @@ import vendingmachine.dto.input.ReadChangeDto;
 import vendingmachine.dto.input.ReadItemNameDto;
 import vendingmachine.dto.input.ReadItemsInfoDto;
 import vendingmachine.dto.input.ReadMoneyDto;
+import vendingmachine.dto.output.PrintChangeDto;
 import vendingmachine.dto.output.PrintExceptionDto;
+import vendingmachine.dto.output.PrintInputMoneyDto;
+import vendingmachine.dto.output.PrintVendingMachineCoinDto;
 import vendingmachine.util.RandomNumbersGenerator;
 import vendingmachine.util.StandardRandomNumbersGenerator;
 import vendingmachine.view.IOViewResolver;
@@ -51,7 +54,7 @@ public class Controller {
         ReadChangeDto readChangeDto = ioViewResolver.inputViewResolve(ReadChangeDto.class);
         RandomNumbersGenerator generator = new StandardRandomNumbersGenerator(Coin.values());
         vendingMachine = new VendingMachine(readChangeDto.getVendingMachineCoin(), generator);
-        ioViewResolver.outputViewResolve(vendingMachine.printCoinStatus());
+        ioViewResolver.outputViewResolve(new PrintVendingMachineCoinDto(vendingMachine.printCoinStatus()));
         return Status.INPUT_ITEMS_INFO;
     }
 
@@ -68,7 +71,7 @@ public class Controller {
     }
 
     private Status inputItemName() {
-        ioViewResolver.outputViewResolve(vendingMachine.printInputMoney());
+        ioViewResolver.outputViewResolve(new PrintInputMoneyDto(vendingMachine.printInputMoney()));
         if (!vendingMachine.haveEnoughMoney()) {
             return Status.RETURN_CHANGE;
         }
@@ -80,7 +83,7 @@ public class Controller {
     }
 
     private Status returnChange() {
-        ioViewResolver.outputViewResolve(vendingMachine.getChangeMap());
+        ioViewResolver.outputViewResolve(new PrintChangeDto(vendingMachine.getChangeMap()));
         return Status.EXIT;
     }
 }

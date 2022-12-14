@@ -6,7 +6,6 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import vendingmachine.domain.items.Item;
-import vendingmachine.dto.output.PrintChangeDto;
 
 import java.util.TreeMap;
 
@@ -44,14 +43,14 @@ class VendingMachineTest {
         @Test
         void 모든_잔돈을_반환() {
             vendingMachine.purchase(new Item("콜라"), true);
-            assertEquals(vendingMachine.printInputMoney().getInputMoney(), new Money(1500));
+            assertEquals(vendingMachine.printInputMoney(), new Money(1500));
 
             vendingMachine.purchase(new Item("사이다"), true);
-            assertEquals(vendingMachine.printInputMoney().getInputMoney(), new Money(500));
+            assertEquals(vendingMachine.printInputMoney(), new Money(500));
 
             assertFalse(vendingMachine.haveEnoughMoney());
 
-            TreeMap<Coin, Integer> changeMap = vendingMachine.getChangeMap().getChangeMap();
+            TreeMap<Coin, Integer> changeMap = vendingMachine.getChangeMap();
             assertEquals(changeMap.get(Coin.COIN_100), 3);
             assertEquals(changeMap.get(Coin.COIN_50), 2);
             assertEquals(changeMap.get(Coin.COIN_10), 5);
@@ -60,14 +59,14 @@ class VendingMachineTest {
         @Test
         void 반환할_잔돈이_없음() {
             vendingMachine.purchase(new Item("콜라"), true);
-            assertEquals(vendingMachine.printInputMoney().getInputMoney(), new Money(1500));
+            assertEquals(vendingMachine.printInputMoney(), new Money(1500));
 
             vendingMachine.purchase(new Item("콜라"), true);
-            assertEquals(vendingMachine.printInputMoney().getInputMoney(), new Money(0));
+            assertEquals(vendingMachine.printInputMoney(), new Money(0));
 
             assertFalse(vendingMachine.haveEnoughMoney());
 
-            TreeMap<Coin, Integer> changeMap = vendingMachine.getChangeMap().getChangeMap();
+            TreeMap<Coin, Integer> changeMap = vendingMachine.getChangeMap();
             assertEquals(changeMap.size(), 0);
         }
     }
@@ -94,15 +93,14 @@ class VendingMachineTest {
         @Test
         void 잔돈을_반환() {
             vendingMachine.purchase(new Item("콜라"), true);
-            assertEquals(vendingMachine.printInputMoney().getInputMoney(), new Money(1900));
+            assertEquals(vendingMachine.printInputMoney(), new Money(1900));
 
             vendingMachine.purchase(new Item("사이다"), true);
-            assertEquals(vendingMachine.printInputMoney().getInputMoney(), new Money(600));
+            assertEquals(vendingMachine.printInputMoney(), new Money(600));
 
             assertFalse(vendingMachine.haveEnoughMoney());
 
-            PrintChangeDto changeMap1 = vendingMachine.getChangeMap();
-            TreeMap<Coin, Integer> changeMap = changeMap1.getChangeMap();
+            TreeMap<Coin, Integer> changeMap = vendingMachine.getChangeMap();
             assertEquals(changeMap.get(Coin.COIN_500), 1);
             assertEquals(changeMap.get(Coin.COIN_100), 1);
             assertEquals(changeMap.size(), 2);
